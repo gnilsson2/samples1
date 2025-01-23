@@ -9,16 +9,13 @@ namespace CommunityToolkit.Maui.Sample;
 
 public partial class MediaElementPage : BasePage
 {
-    readonly ILogger logger;
-
-    public MediaElementPage(BaseViewModel viewModel, ILogger<MediaElementPage> logger)
+    public MediaElementPage(BaseViewModel viewModel)
     {
         BindingContext = viewModel;
         //Padding = 12;
 
         InitializeComponent();
 
-        this.logger = logger;
         MediaElement.PropertyChanged += MediaElement_PropertyChanged;
     }
 
@@ -26,16 +23,10 @@ public partial class MediaElementPage : BasePage
     {
         if (e.PropertyName == MediaElement.DurationProperty.PropertyName)
         {
-            logger.LogInformation("Duration: {NewDuration}", MediaElement.Duration);
+            //logger.LogInformation("Duration: {NewDuration}", MediaElement.Duration);
         }
     }
 
-    void OnMediaOpened(object? sender, EventArgs e) => logger.LogInformation("Media opened.");
-    void OnStateChanged(object? sender, MediaStateChangedEventArgs e) => logger.LogInformation("Media State Changed. Old State: {PreviousState}, New State: {NewState}", e.PreviousState, e.NewState);
-    void OnMediaFailed(object? sender, MediaFailedEventArgs e) => logger.LogInformation("Media failed. Error: {ErrorMessage}", e.ErrorMessage);
-    void OnMediaEnded(object? sender, EventArgs e) => logger.LogInformation("Media ended.");
-    void OnPositionChanged(object? sender, MediaPositionChangedEventArgs e) => logger.LogInformation("Position changed to {Position}", e.Position);
-    void OnSeekCompleted(object? sender, EventArgs e) => logger.LogInformation("Seek completed.");
     void OnPlayClicked(object? sender, EventArgs e) => MediaElement.Play();
     void OnPauseClicked(object? sender, EventArgs e) => MediaElement.Pause();
     void OnStopClicked(object? sender, EventArgs e) => MediaElement.Stop();

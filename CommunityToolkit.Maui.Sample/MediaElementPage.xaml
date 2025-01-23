@@ -21,12 +21,7 @@
                 x:Name="MediaElement"
                 ShouldAutoPlay="True"
                 Source="embed://kort1.mp4"
-                MediaEnded="OnMediaEnded"
-                MediaFailed="OnMediaFailed"
-                MediaOpened="OnMediaOpened"
-                PositionChanged="OnPositionChanged"
-                StateChanged="OnStateChanged"
-                SeekCompleted="OnSeekCompleted"/>
+             />
             
             <HorizontalStackLayout Grid.Row="1" Padding="0,0,0,15">
                 <Label HorizontalOptions="Center" x:DataType="toolkit:MediaElement">
