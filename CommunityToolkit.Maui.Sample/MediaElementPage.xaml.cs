@@ -4,16 +4,18 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 
 namespace CommunityToolkit.Maui.Sample;
 
-public partial class MediaElementPage : BasePage<BaseViewModel>
+public partial class MediaElementPage : BasePage
 {
     readonly ILogger logger;
 
-    public MediaElementPage(BaseViewModel viewModel, ILogger<MediaElementPage> logger) : base(viewModel)
+    public MediaElementPage(BaseViewModel viewModel, ILogger<MediaElementPage> logger)
     {
+        BindingContext = viewModel;
+        //Padding = 12;
+
         InitializeComponent();
 
         this.logger = logger;
@@ -45,36 +47,17 @@ public partial class MediaElementPage : BasePage<BaseViewModel>
     }
 }
 
-public abstract class BasePage<TViewModel>(TViewModel viewModel) : BasePage(viewModel)
-    where TViewModel : BaseViewModel
-{
-    public new TViewModel BindingContext => (TViewModel)base.BindingContext;
-}
-
 public abstract class BasePage : ContentPage
 {
-    protected BasePage(object? viewModel = null)
+    public BasePage(object? viewModel = null)
     {
-        BindingContext = viewModel;
-        Padding = 12;
-
-        if (string.IsNullOrWhiteSpace(Title))
-        {
-            Title = GetType().Name;
-        }
     }
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
+    //protected override void OnAppearing()
+    //{
+    //    base.OnAppearing();
 
-        Debug.WriteLine($"OnAppearing: {Title}");
-    }
+    //    Debug.WriteLine($"OnAppearing: {Title}");
+    //}
 
-    protected override void OnDisappearing()
-    {
-        base.OnDisappearing();
-
-        Debug.WriteLine($"OnDisappearing: {Title}");
-    }
 }
