@@ -9,32 +9,25 @@
              x:Class="CommunityToolkit.Maui.Sample.MediaElementPage"
              Title="MediaElement">
 
-    <ScrollView>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="220" />
                 <RowDefinition Height="50" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+            
             <toolkit:MediaElement
                 x:Name="MediaElement"
                 ShouldAutoPlay="True"
                 Source="embed://kort1.mp4"
-                MetadataArtworkUrl="https://lh3.googleusercontent.com/pw/AP1GczNRrebWCJvfdIau1EbsyyYiwAfwHS0JXjbioXvHqEwYIIdCzuLodQCZmA57GADIo5iB3yMMx3t_vsefbfoHwSg0jfUjIXaI83xpiih6d-oT7qD_slR0VgNtfAwJhDBU09kS5V2T5ZML-WWZn8IrjD4J-g=w1792-h1024-s-no-gm"
-                MetadataTitle="Big Buck Bunny"
-                MetadataArtist="Blender Foundation"
                 MediaEnded="OnMediaEnded"
                 MediaFailed="OnMediaFailed"
                 MediaOpened="OnMediaOpened"
                 PositionChanged="OnPositionChanged"
                 StateChanged="OnStateChanged"
                 SeekCompleted="OnSeekCompleted"/>
+            
             <HorizontalStackLayout Grid.Row="1" Padding="0,0,0,15">
                 <Label HorizontalOptions="Center" x:DataType="toolkit:MediaElement">
                     <Label.Text>
@@ -54,26 +47,10 @@
                 <Button Grid.Column="2" Text="Stop" Clicked="OnStopClicked" />
             </Grid>
 
-            <Grid Grid.Row="4" HorizontalOptions="Fill">
+            <Grid Grid.Row="3" HorizontalOptions="Fill">
                 <Label HorizontalOptions="Start" x:DataType="toolkit:MediaElement" Text="{Binding Position, Source={x:Reference MediaElement}}" />
                 <Label HorizontalOptions="End" HorizontalTextAlignment="End" x:DataType="toolkit:MediaElement" Text="{Binding Duration, Source={x:Reference MediaElement}}" />
             </Grid>
 
-        
-            <VerticalStackLayout Grid.Row="8">
-                <HorizontalStackLayout Padding="0,0,0,10">
-                    <Switch
-                        Margin="0,0,5,0"
-                        ThumbColor="White"
-                        OnColor="LimeGreen"
-                        x:DataType="toolkit:MediaElement"
-                        IsToggled="{Binding Source={x:Reference MediaElement}, Path=ShouldShowPlaybackControls}" />
-                    <Label
-                        VerticalOptions="Center"
-                        Text="Show playback controls" />
-                </HorizontalStackLayout>
-  
-            </VerticalStackLayout>
         </Grid>
-    </ScrollView>
 </pages:BasePage>
