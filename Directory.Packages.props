@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+    <NoWarn>$(NoWarn);NU1507</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="CommunityToolkit.Maui" Version="11.0.0" />
+    <PackageVersion Include="CommunityToolkit.Maui.Core" Version="11.0.0" />
+    <PackageVersion Include="CommunityToolkit.Maui.MediaElement" Version="6.0.0" />
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="9.0.1" />
+    <PackageVersion Include="Microsoft.Maui.Controls.Core" Version="9.0.30" />
+    <PackageVersion Include="Microsoft.Maui.Core" Version="9.0.30" />
+  </ItemGroup>
+</Project>
