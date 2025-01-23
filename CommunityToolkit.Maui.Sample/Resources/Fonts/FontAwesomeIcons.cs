@@ -8,14 +8,14 @@
 /// </summary>
 public static class FontAwesomeIcons
 {
-	/// <summary>
-	/// fa-microsoft unicode value ("\uf3ca").
-	/// <para/>
-	/// This icon supports the following styles: Brands
-	/// <para/>
-	/// Introduced in '5.0.0', Last Modified in '5.0.0'.
-	/// <para/>
-	/// See https://fontawesome.com/icons/microsoft
-	/// </summary>
-	public const string Microsoft = "\uf3ca";
+    /// <summary>
+    /// fa-microsoft unicode value ("\uf3ca").
+    /// <para/>
+    /// This icon supports the following styles: Brands
+    /// <para/>
+    /// Introduced in '5.0.0', Last Modified in '5.0.0'.
+    /// <para/>
+    /// See https://fontawesome.com/icons/microsoft
+    /// </summary>
+    public const string Microsoft = "\uf3ca";
 }

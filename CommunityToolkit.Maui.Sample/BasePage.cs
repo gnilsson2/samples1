@@ -1,38 +1,38 @@
-﻿using System.Diagnostics;
-using Microsoft.Maui.Controls;
+﻿using Microsoft.Maui.Controls;
+using System.Diagnostics;
 
 namespace CommunityToolkit.Maui.Sample;
 
 public abstract class BasePage<TViewModel>(TViewModel viewModel) : BasePage(viewModel)
-	where TViewModel : BaseViewModel
+    where TViewModel : BaseViewModel
 {
-	public new TViewModel BindingContext => (TViewModel)base.BindingContext;
+    public new TViewModel BindingContext => (TViewModel)base.BindingContext;
 }
 
 public abstract class BasePage : ContentPage
 {
-	protected BasePage(object? viewModel = null)
-	{
-		BindingContext = viewModel;
-		Padding = 12;
+    protected BasePage(object? viewModel = null)
+    {
+        BindingContext = viewModel;
+        Padding = 12;
 
-		if (string.IsNullOrWhiteSpace(Title))
-		{
-			Title = GetType().Name;
-		}
-	}
+        if (string.IsNullOrWhiteSpace(Title))
+        {
+            Title = GetType().Name;
+        }
+    }
 
-	protected override void OnAppearing()
-	{
-		base.OnAppearing();
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
 
-		Debug.WriteLine($"OnAppearing: {Title}");
-	}
+        Debug.WriteLine($"OnAppearing: {Title}");
+    }
 
-	protected override void OnDisappearing()
-	{
-		base.OnDisappearing();
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
 
-		Debug.WriteLine($"OnDisappearing: {Title}");
-	}
+        Debug.WriteLine($"OnDisappearing: {Title}");
+    }
 }

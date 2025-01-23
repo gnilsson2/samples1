@@ -13,35 +13,35 @@ namespace CommunityToolkit.Maui.Sample;
 
 public static class MauiProgram
 {
-	public static MauiApp CreateMauiApp()
-	{
-		var builder = MauiApp.CreateBuilder()
-			.UseMauiCommunityToolkit()
-			.UseMauiCommunityToolkitMediaElement()
+    public static MauiApp CreateMauiApp()
+    {
+        var builder = MauiApp.CreateBuilder()
+            .UseMauiCommunityToolkit()
+            .UseMauiCommunityToolkitMediaElement()
 
-			.ConfigureMauiHandlers(handlers =>
-			{
-	#if IOS || MACCATALYST
-				handlers.AddHandler<CollectionView, Microsoft.Maui.Controls.Handlers.Items2.CollectionViewHandler2>();
-				handlers.AddHandler<CarouselView, Microsoft.Maui.Controls.Handlers.Items2.CarouselViewHandler2>();
-	#endif
-			})
+            .ConfigureMauiHandlers(handlers =>
+            {
+#if IOS || MACCATALYST
+                handlers.AddHandler<CollectionView, Microsoft.Maui.Controls.Handlers.Items2.CollectionViewHandler2>();
+                handlers.AddHandler<CarouselView, Microsoft.Maui.Controls.Handlers.Items2.CarouselViewHandler2>();
+#endif
+            })
 
-			.UseMauiApp<App>();
+            .UseMauiApp<App>();
 
 
-		builder.Services.AddSingleton<MediaElementPage>();
-		
-		Routing.RegisterRoute("//ViewsGalleryPage/MediaElementPage", typeof(NavigableElement));
-		builder.Services.AddTransient<NavigableElement, MediaElementViewModel>();
-		
-		builder.Services.AddSingleton(DeviceDisplay.Current);
+        builder.Services.AddSingleton<MediaElementPage>();
+
+        Routing.RegisterRoute("//ViewsGalleryPage/MediaElementPage", typeof(NavigableElement));
+        builder.Services.AddTransient<NavigableElement, MediaElementViewModel>();
+
+        builder.Services.AddSingleton(DeviceDisplay.Current);
 
 #if DEBUG
-		builder.Logging.AddDebug().SetMinimumLevel(LogLevel.Trace);
+        builder.Logging.AddDebug().SetMinimumLevel(LogLevel.Trace);
 #endif
 
-		return builder.Build();
-	}
+        return builder.Build();
+    }
 
 }

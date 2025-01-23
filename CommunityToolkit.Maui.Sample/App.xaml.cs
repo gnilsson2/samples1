@@ -6,14 +6,14 @@ namespace CommunityToolkit.Maui.Sample;
 
 public partial class App : Application
 {
-	readonly MediaElementPage appShell;
+    readonly MediaElementPage appShell;
 
-	public App(MediaElementPage appShell)
-	{
-		InitializeComponent();
+    public App(MediaElementPage appShell)
+    {
+        InitializeComponent();
 
-		this.appShell = appShell;
-	}
+        this.appShell = appShell;
+    }
 
-	protected override Window CreateWindow(IActivationState? activationState) => new(appShell);
+    protected override Window CreateWindow(IActivationState? activationState) => new(appShell);
 }
