@@ -33,7 +33,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<MediaElementPage>();
 
         Routing.RegisterRoute("//ViewsGalleryPage/MediaElementPage", typeof(NavigableElement));
-        builder.Services.AddTransient<NavigableElement, MediaElementViewModel>();
+        builder.Services.AddTransient<NavigableElement, BaseViewModel>();
 
         builder.Services.AddSingleton(DeviceDisplay.Current);
 

@@ -2,6 +2,6 @@
 
 namespace CommunityToolkit.Maui.Sample;
 
-public abstract partial class BaseViewModel : ObservableObject
+public partial class BaseViewModel : ObservableObject
 {
 }

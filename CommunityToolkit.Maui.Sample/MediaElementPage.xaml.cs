@@ -7,11 +7,11 @@ using System.ComponentModel;
 
 namespace CommunityToolkit.Maui.Sample;
 
-public partial class MediaElementPage : BasePage<MediaElementViewModel>
+public partial class MediaElementPage : BasePage<BaseViewModel>
 {
     readonly ILogger logger;
 
-    public MediaElementPage(MediaElementViewModel viewModel, ILogger<MediaElementPage> logger) : base(viewModel)
+    public MediaElementPage(BaseViewModel viewModel, ILogger<MediaElementPage> logger) : base(viewModel)
     {
         InitializeComponent();
 
