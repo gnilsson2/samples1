@@ -1,7 +1,5 @@
-﻿using CommunityToolkit.Maui.Core.Primitives;
-using CommunityToolkit.Maui.Views;
+﻿using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls;
 using System;
 using System.ComponentModel;

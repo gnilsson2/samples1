@@ -1,24 +1,22 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Runtime;
-using CommunityToolkit.Maui;
-using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Maui.ApplicationModel;
 using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
+using System;
 
 namespace CommunityToolkit.Maui.Sample;
 
 [Application]
 public class MainApplication : MauiApplication
 {
-	public MainApplication(IntPtr handle, JniHandleOwnership ownership)
-		: base(handle, ownership)
-	{
-		var samsungProvider = new SamsungBadgeProvider();
-		BadgeFactory.SetBadgeProvider("com.sec.android.app.launcher", samsungProvider);
-		BadgeFactory.SetBadgeProvider("com.sec.android.app.twlauncher", samsungProvider);
-	}
+    public MainApplication(IntPtr handle, JniHandleOwnership ownership)
+        : base(handle, ownership)
+    {
+        var samsungProvider = new SamsungBadgeProvider();
+        BadgeFactory.SetBadgeProvider("com.sec.android.app.launcher", samsungProvider);
+        BadgeFactory.SetBadgeProvider("com.sec.android.app.twlauncher", samsungProvider);
+    }
 
-	protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+    protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
 }
