@@ -17,6 +17,26 @@ public partial class MediaElementPage : BasePage
 
         InitializeComponent();
 
+
+        var horizontalStackLayout = new HorizontalStackLayout
+        {
+            Padding = new Thickness(0, 0, 0, 15),
+            HorizontalOptions = LayoutOptions.Center
+        };
+        var label = new Label
+        {
+            HorizontalOptions = LayoutOptions.Center
+        };
+        var multiBinding = new MultiBinding { StringFormat = "Current State: {0} - Dimensions: {1}x{2}" };
+        multiBinding.Bindings.Add(new Binding("CurrentState", source: MediaElement));
+        multiBinding.Bindings.Add(new Binding("MediaWidth", source: MediaElement));
+        multiBinding.Bindings.Add(new Binding("MediaHeight", source: MediaElement));
+        label.SetBinding(Label.TextProperty, multiBinding);
+        horizontalStackLayout.Children.Add(label);
+        Thegrid.Children.Add(horizontalStackLayout);
+        Thegrid.SetRow(horizontalStackLayout, 1);
+
+
         var buttonGrid = new Microsoft.Maui.Controls.Grid
         {
             Padding = new Thickness(0, 10, 0, 10),

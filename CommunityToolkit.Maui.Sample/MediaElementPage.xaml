@@ -24,18 +24,6 @@
                 Source="embed://kort1.mp4"
              />
 
-        <HorizontalStackLayout Grid.Row="1" Padding="0,0,0,15">
-            <Label HorizontalOptions="Center" x:DataType="toolkit:MediaElement">
-                <Label.Text>
-                    <MultiBinding StringFormat="{}Current State: {0} - Dimensions: {1}x{2}">
-                        <Binding Path="CurrentState" Source="{x:Reference MediaElement}" />
-                        <Binding Path="MediaWidth" Source="{x:Reference MediaElement}" />
-                        <Binding Path="MediaHeight" Source="{x:Reference MediaElement}" />
-                    </MultiBinding>
-                </Label.Text>
-            </Label>
-
-        </HorizontalStackLayout>
 
     </Grid>
 </pages:BasePage>
