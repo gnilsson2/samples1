@@ -18,7 +18,6 @@ public partial class MediaElementPage : BasePage
         BindingContext = viewModel;
         //Padding = 12;
 
-        InitializeComponent();
 
         Thegrid = new Microsoft.Maui.Controls.Grid
         {

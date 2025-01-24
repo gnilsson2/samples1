@@ -38,11 +38,6 @@
     <!-- Images -->
     <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
-    <Compile Remove="Resources\Fonts\**" />
-    <EmbeddedResource Remove="Resources\Fonts\**" />
-    <MauiCss Remove="Resources\Fonts\**" />
-    <MauiXaml Remove="Resources\Fonts\**" />
-    <None Remove="Resources\Fonts\**" />
     <!-- Custom Fonts -->
     <PackageReference Include="CommunityToolkit.Maui" />
     <PackageReference Include="CommunityToolkit.Maui.Core" />
@@ -58,11 +53,6 @@
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Update="MediaElementPage.xaml.cs">
-      <DependentUpon>MediaElementPage.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
