@@ -17,7 +17,7 @@ public partial class MediaElementPage : BasePage
 
         BuildGrid();
 
-        MediaElement.PropertyChanged += MediaElement_PropertyChanged;
+        MediaElement!.PropertyChanged += MediaElement_PropertyChanged;
     }
 
     private void BuildGrid()
