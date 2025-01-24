@@ -60,7 +60,7 @@ public partial class MediaElementPage : BasePage
 
         //var x = DeviceDisplay.Current.MainDisplayInfo.Width;
         //var y = DeviceDisplay.Current.MainDisplayInfo.Height;
-        
+
         //var screenwidth = DeviceDisplay.Current.MainDisplayInfo.Width;
         //var screenheight = DeviceDisplay.Current.MainDisplayInfo.Height;
 
@@ -70,19 +70,33 @@ public partial class MediaElementPage : BasePage
         //double scaley(int x) {
         //    return (x * screenheight / 480);
         //}
-
-
-        AbsoluteLayout.SetLayoutBounds(MediaElement, new Rect(0, 0, 400, 240)); //TODO scale !!!
-        AbsoluteLayout.SetLayoutFlags(MediaElement, AbsoluteLayoutFlags.PositionProportional);
-
+        
         Image image = new Image { Source = "overlay_image.png" };
 
-        //TODO : add overlay
+
+        //AbsoluteLayout.SetLayoutBounds(MediaElement, new Rect(0, 0, 400, 240)); //TODO scale !!!
+        //AbsoluteLayout.SetLayoutFlags(MediaElement, AbsoluteLayoutFlags.PositionProportional);
+
+        //AbsoluteLayout.SetLayoutBounds(image, new Rect(0.1, 0.1, 300, 140)); //TODO scale !!!
+        //AbsoluteLayout.SetLayoutFlags(image, AbsoluteLayoutFlags.PositionProportional);
+        ////TODO : add overlay
+        //AbsoluteLayout absoluteLayout = new AbsoluteLayout
+        //{
+        //    Margin = new Thickness(0),
+        //    Children =  { MediaElement, image },
+        //};
+
         AbsoluteLayout absoluteLayout = new AbsoluteLayout
         {
-            Margin = new Thickness(0),
-            Children =  { MediaElement },
+            Margin = new Thickness(0)
         };
+
+        absoluteLayout.Add(MediaElement, new Rect(0, 0, 400, 240));
+        //absoluteLayout.Add(MediaElement, new Point(0, 0));
+
+        absoluteLayout.Add(image, new Point(30, 25));
+
+
 
         return absoluteLayout;
     }
@@ -224,8 +238,23 @@ public static class MyExtensions
         Thegrid.SetRow(buttonGrid, row);
     }
 
+    public static void Add(this AbsoluteLayout absoluteLayout, IView view, Rect bounds, AbsoluteLayoutFlags flags = AbsoluteLayoutFlags.None)
+    {
+        if (view == null)
+            throw new ArgumentNullException(nameof(view));
+        if (bounds.IsEmpty)
+            throw new ArgumentNullException(nameof(bounds));
+
+        absoluteLayout.Add(view);
+        absoluteLayout.SetLayoutBounds(view, bounds);
+        absoluteLayout.SetLayoutFlags(view, flags);
+    }
     public static void Add(this AbsoluteLayout absoluteLayout, IView view, Point position)
     {
+        if (view == null)
+            throw new ArgumentNullException(nameof(view));
+        if (position.IsEmpty)
+            throw new ArgumentNullException(nameof(position));
         absoluteLayout.Add(view);
         absoluteLayout.SetLayoutBounds(view, new Rect(position.X, position.Y, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
     }
