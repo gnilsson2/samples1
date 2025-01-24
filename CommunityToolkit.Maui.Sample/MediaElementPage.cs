@@ -12,7 +12,7 @@ namespace CommunityToolkit.Maui.Sample;
 public partial class MediaElementPage : BasePage
 {
     private readonly Microsoft.Maui.Controls.Grid Thegrid;
-    MediaElement MediaElement;
+    private readonly MediaElement MediaElement;
     public MediaElementPage(BaseViewModel viewModel)
     {
         BindingContext = viewModel;
@@ -70,13 +70,13 @@ public partial class MediaElementPage : BasePage
                 },
             ColumnSpacing = 5
         };
-        Button b0 = new Button { Text = "Play", Command = new Command(OnPlayClicked) };
+        Button b0 = new() { Text = "Play", Command = new Command(OnPlayClicked) };
         buttonGrid.Children.Add(b0);
         buttonGrid.SetColumn(b0, 0);
-        Button b1 = new Button { Text = "Pause", Command = new Command(OnPauseClicked) };
+        Button b1 = new() { Text = "Pause", Command = new Command(OnPauseClicked) };
         buttonGrid.Children.Add(b1);
         buttonGrid.SetColumn(b1, 1);
-        Button b2 = new Button { Text = "Stop", Command = new Command(OnStopClicked) };
+        Button b2 = new() { Text = "Stop", Command = new Command(OnStopClicked) };
         buttonGrid.Children.Add(b2);
         buttonGrid.SetColumn(b2, 2);
         Thegrid.Children.Add(buttonGrid);
@@ -136,11 +136,8 @@ public partial class MediaElementPage : BasePage
     }
 }
 
-public abstract class BasePage : ContentPage
+public abstract class BasePage() : ContentPage
 {
-    public BasePage(object? viewModel = null)
-    {
-    }
 
     //protected override void OnAppearing()
     //{
