@@ -75,6 +75,9 @@ public partial class MediaElementPage : BasePage
         AbsoluteLayout.SetLayoutBounds(MediaElement, new Rect(0, 0, 400, 240)); //TODO scale !!!
         AbsoluteLayout.SetLayoutFlags(MediaElement, AbsoluteLayoutFlags.PositionProportional);
 
+        Image image = new Image { Source = "overlay_image.png" };
+
+        //TODO : add overlay
         AbsoluteLayout absoluteLayout = new AbsoluteLayout
         {
             Margin = new Thickness(0),
