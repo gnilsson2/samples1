@@ -2,10 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Compatibility;
-using System;
 using System.ComponentModel;
-using System.Xml.Linq;
 
 namespace CommunityToolkit.Maui.Sample;
 
