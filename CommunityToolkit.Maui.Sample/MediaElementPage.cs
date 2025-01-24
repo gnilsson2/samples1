@@ -8,14 +8,21 @@ namespace CommunityToolkit.Maui.Sample;
 
 public partial class MediaElementPage : BasePage
 {
-    private readonly Microsoft.Maui.Controls.Grid Thegrid;
-    private readonly MediaElement MediaElement;
+    private MediaElement MediaElement;
     public MediaElementPage(BaseViewModel viewModel)
     {
         BindingContext = viewModel;
         //Padding = 12;
 
 
+        BuildGrid();
+
+        MediaElement.PropertyChanged += MediaElement_PropertyChanged;
+    }
+
+    private void BuildGrid()
+    {
+        Microsoft.Maui.Controls.Grid Thegrid;
         Thegrid = new Microsoft.Maui.Controls.Grid
         {
             RowDefinitions =
@@ -99,10 +106,10 @@ public partial class MediaElementPage : BasePage
         Thegrid.Children.Add(infoGrid);
         Thegrid.SetRow(infoGrid, 3);
 
-        Content = Thegrid;
 
-        MediaElement.PropertyChanged += MediaElement_PropertyChanged;
+        Content = Thegrid;
     }
+
     private void OnPlayClicked()
     {
         MediaElement.Play();
