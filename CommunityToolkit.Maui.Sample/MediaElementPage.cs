@@ -94,7 +94,7 @@ public partial class MediaElementPage : BasePage
         absoluteLayout.Add(MediaElement, new Rect(0, 0, 400, 240));
         //absoluteLayout.Add(MediaElement, new Point(0, 0));
 
-        absoluteLayout.Add(image, new Point(30, 25));
+        absoluteLayout.Add(image, new Rect(140, 142, 205, 100));
 
 
 
