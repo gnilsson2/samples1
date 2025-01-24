@@ -5,11 +5,13 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Compatibility;
 using System;
 using System.ComponentModel;
+using System.Xml.Linq;
 
 namespace CommunityToolkit.Maui.Sample;
 
 public partial class MediaElementPage : BasePage
 {
+    MediaElement MediaElement;
     public MediaElementPage(BaseViewModel viewModel)
     {
         BindingContext = viewModel;
@@ -17,6 +19,13 @@ public partial class MediaElementPage : BasePage
 
         InitializeComponent();
 
+        MediaElement = new MediaElement
+        {
+            ShouldAutoPlay = true,
+            Source = MediaSource.FromResource("kort1.mp4")
+        };
+
+        Thegrid.Children.Add(MediaElement);
 
         var horizontalStackLayout = new HorizontalStackLayout
         {

@@ -18,11 +18,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <toolkit:MediaElement
-                x:Name="MediaElement"
-                ShouldAutoPlay="True"
-                Source="embed://kort1.mp4"
-             />
+
 
 
     </Grid>
