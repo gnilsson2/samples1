@@ -11,6 +11,7 @@ namespace CommunityToolkit.Maui.Sample;
 
 public partial class MediaElementPage : BasePage
 {
+    private readonly Microsoft.Maui.Controls.Grid Thegrid;
     MediaElement MediaElement;
     public MediaElementPage(BaseViewModel viewModel)
     {
@@ -18,6 +19,17 @@ public partial class MediaElementPage : BasePage
         //Padding = 12;
 
         InitializeComponent();
+
+        Thegrid = new Microsoft.Maui.Controls.Grid
+        {
+            RowDefinitions =
+                {
+                    new RowDefinition { Height = new GridLength(220) },
+                    new RowDefinition { Height = new GridLength(50) },
+                    new RowDefinition { Height = GridLength.Auto },
+                    new RowDefinition { Height = GridLength.Auto }
+                }
+        };
 
         MediaElement = new MediaElement
         {
@@ -91,6 +103,7 @@ public partial class MediaElementPage : BasePage
         Thegrid.Children.Add(infoGrid);
         Thegrid.SetRow(infoGrid, 3);
 
+        Content = Thegrid;
 
         MediaElement.PropertyChanged += MediaElement_PropertyChanged;
     }

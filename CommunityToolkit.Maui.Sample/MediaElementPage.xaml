@@ -9,17 +9,5 @@
              x:Class="CommunityToolkit.Maui.Sample.MediaElementPage"
              Title="MediaElement">
 
-    <Grid x:Name="Thegrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="220" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
 
-
-
-
-    </Grid>
 </pages:BasePage>
