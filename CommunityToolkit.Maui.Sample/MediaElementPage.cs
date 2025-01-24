@@ -2,6 +2,9 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Devices;
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Layouts;
 using System;
 using System.ComponentModel;
 
@@ -40,8 +43,8 @@ public partial class MediaElementPage : BasePage
                 }
         };
 
-
-        Thegrid.AddAtRow(0, MediaElement);
+        //AddFilmen(Thegrid);
+        Thegrid.AddAtRow(0, AddFilmen(Thegrid));
 
         Thegrid.AddAtRow(1, Addstate(Thegrid));
 
@@ -50,6 +53,35 @@ public partial class MediaElementPage : BasePage
         Thegrid.AddAtRow(3, AddPosition(Thegrid));
 
         Content = Thegrid;
+    }
+
+    private AbsoluteLayout AddFilmen(Grid Thegrid)
+    {
+
+        //var x = DeviceDisplay.Current.MainDisplayInfo.Width;
+        //var y = DeviceDisplay.Current.MainDisplayInfo.Height;
+        
+        //var screenwidth = DeviceDisplay.Current.MainDisplayInfo.Width;
+        //var screenheight = DeviceDisplay.Current.MainDisplayInfo.Height;
+
+        //double scalex(int x){
+        //    return (x * screenwidth / 852);
+        //}
+        //double scaley(int x) {
+        //    return (x * screenheight / 480);
+        //}
+
+
+        AbsoluteLayout.SetLayoutBounds(MediaElement, new Rect(0, 0, 400, 240)); //TODO scale !!!
+        AbsoluteLayout.SetLayoutFlags(MediaElement, AbsoluteLayoutFlags.PositionProportional);
+
+        AbsoluteLayout absoluteLayout = new AbsoluteLayout
+        {
+            Margin = new Thickness(0),
+            Children =  { MediaElement },
+        };
+
+        return absoluteLayout;
     }
 
     private Grid AddButtons(Grid Thegrid)
@@ -79,7 +111,6 @@ public partial class MediaElementPage : BasePage
 
         return buttonGrid;
     }
-
 
     private Grid AddPosition(Grid Thegrid)
     {
@@ -189,4 +220,11 @@ public static class MyExtensions
         Thegrid.Children.Add(buttonGrid);
         Thegrid.SetRow(buttonGrid, row);
     }
+
+    public static void Add(this AbsoluteLayout absoluteLayout, IView view, Point position)
+    {
+        absoluteLayout.Add(view);
+        absoluteLayout.SetLayoutBounds(view, new Rect(position.X, position.Y, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
+    }
+
 }
