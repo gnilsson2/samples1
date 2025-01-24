@@ -17,6 +17,31 @@ public partial class MediaElementPage : BasePage
 
         InitializeComponent();
 
+        var buttonGrid = new Microsoft.Maui.Controls.Grid
+        {
+            Padding = new Thickness(0, 10, 0, 10),
+            ColumnDefinitions =
+                {
+                    new ColumnDefinition(),
+                    new ColumnDefinition(),
+                    new ColumnDefinition(),
+                    new ColumnDefinition(),
+                    new ColumnDefinition()
+                },
+            ColumnSpacing = 5
+        };
+        Button b0 = new Button { Text = "Play", Command = new Command(OnPlayClicked) };
+        buttonGrid.Children.Add(b0);
+        buttonGrid.SetColumn(b0, 0);
+        Button b1 = new Button { Text = "Pause", Command = new Command(OnPauseClicked) };
+        buttonGrid.Children.Add(b1);
+        buttonGrid.SetColumn(b1, 1);
+        Button b2 = new Button { Text = "Stop", Command = new Command(OnStopClicked) };
+        buttonGrid.Children.Add(b2);
+        buttonGrid.SetColumn(b2, 2);
+        Thegrid.Children.Add(buttonGrid);
+        Thegrid.SetRow(buttonGrid, 2);
+
         var positionLabel = new Label
         {
             HorizontalOptions = LayoutOptions.Start
@@ -40,6 +65,20 @@ public partial class MediaElementPage : BasePage
 
         MediaElement.PropertyChanged += MediaElement_PropertyChanged;
     }
+    private void OnPlayClicked()
+    {
+        MediaElement.Play();
+    }
+
+    private void OnPauseClicked()
+    {
+        MediaElement.Pause();
+    }
+
+    private void OnStopClicked()
+    {
+        MediaElement.Stop();
+    }
 
     void MediaElement_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
@@ -48,10 +87,6 @@ public partial class MediaElementPage : BasePage
             //logger.LogInformation("Duration: {NewDuration}", MediaElement.Duration);
         }
     }
-
-    void OnPlayClicked(object? sender, EventArgs e) => MediaElement.Play();
-    void OnPauseClicked(object? sender, EventArgs e) => MediaElement.Pause();
-    void OnStopClicked(object? sender, EventArgs e) => MediaElement.Stop();
 
     protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
     {
