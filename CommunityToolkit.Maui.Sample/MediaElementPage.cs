@@ -2,19 +2,16 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Devices;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 using PaulSchlyter;
 using System;
 using System.ComponentModel;
-using System.Numerics;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CommunityToolkit.Maui.Sample;
 public partial class MediaElementPage : BasePage
 {
-    private MediaElement MediaElement;
+    private readonly MediaElement MediaElement;
     public MediaElementPage(BaseViewModel viewModel)
     {
         BindingContext = viewModel;
@@ -49,18 +46,18 @@ public partial class MediaElementPage : BasePage
         };
 
         //AddFilmen(Thegrid);
-        Thegrid.AddAtRow(0, AddFilmen(Thegrid));
+        Thegrid.AddAtRow(0, AddFilmen());
 
-        Thegrid.AddAtRow(1, Addstate(Thegrid));
+        Thegrid.AddAtRow(1, Addstate());
 
-        Thegrid.AddAtRow(2, AddButtons(Thegrid));
+        Thegrid.AddAtRow(2, AddButtons());
 
-        Thegrid.AddAtRow(3, AddPosition(Thegrid));
+        Thegrid.AddAtRow(3, AddPosition());
 
         Content = Thegrid;
     }
 
-    private AbsoluteLayout AddFilmen(Grid Thegrid)
+    private AbsoluteLayout AddFilmen()
     {
 
         //var x = DeviceDisplay.Current.MainDisplayInfo.Width;
@@ -75,7 +72,7 @@ public partial class MediaElementPage : BasePage
         //double scaley(int x) {
         //    return (x * screenheight / 480);
         //}
-        
+
         var image = new Microsoft.Maui.Controls.Image { Source = "overlay_image.png" };
 
 
@@ -91,7 +88,7 @@ public partial class MediaElementPage : BasePage
         //    Children =  { MediaElement, image },
         //};
 
-        AbsoluteLayout absoluteLayout = new AbsoluteLayout
+        AbsoluteLayout absoluteLayout = new()
         {
             Margin = new Thickness(0)
         };
@@ -107,7 +104,7 @@ public partial class MediaElementPage : BasePage
             //FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
             //VerticalOptions = LayoutOptions.CenterAndExpand,
             //HorizontalOptions = LayoutOptions.CenterAndExpand,
-            TextColor = Color.FromRgba(255,255,255,128),
+            TextColor = Color.FromRgba(255, 255, 255, 128),
             FontSize = 11,
         };
         absoluteLayout.Add(label, new Rect(145, 162, 205, 100));
@@ -116,7 +113,7 @@ public partial class MediaElementPage : BasePage
         return absoluteLayout;
     }
 
-    private Grid AddButtons(Grid Thegrid)
+    private Grid AddButtons()
     {
         var buttonGrid = new Microsoft.Maui.Controls.Grid
         {
@@ -144,7 +141,7 @@ public partial class MediaElementPage : BasePage
         return buttonGrid;
     }
 
-    private Grid AddPosition(Grid Thegrid)
+    private Grid AddPosition()
     {
         var positionLabel = new Label
         {
@@ -167,7 +164,7 @@ public partial class MediaElementPage : BasePage
         return infoGrid;
     }
 
-    private HorizontalStackLayout Addstate(Grid Thegrid)
+    private HorizontalStackLayout Addstate()
     {
         var horizontalStackLayout = new HorizontalStackLayout
         {
@@ -229,21 +226,17 @@ public partial class MediaElementPage : BasePage
         var diff = result.ToString(fmt);
         return diff + "   ";
     }
-    class Coordinate
-    {
-        public Coordinate(double latitude, double longitude)
-        {
-            Latitude=latitude;
-            Longitude=longitude;
-        }
+    private const string NAtime = "    -    ";
 
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
+    class Coordinate(double latitude, double longitude)
+    {
+        public double Latitude { get; set; } = latitude;
+        public double Longitude { get; set; } = longitude;
     }
     class Place
     {
-        public string Name { get; set; }
-        public Coordinate Coordinate { get; set; }
+        public required string Name { get; set; }
+        public required Coordinate Coordinate { get; set; }
     }
 
     static readonly Place[] places =
@@ -254,8 +247,8 @@ public partial class MediaElementPage : BasePage
         new Place { Name = "Kiruna", Coordinate = new Coordinate(67.848889, 20.302778) }
     ];
 
-    static string sunriseTable;
-    static string sunsetTable;
+    static string? sunriseTable;
+    static string? sunsetTable;
 
     public static void Calculate(DateTime today)
     {
@@ -267,12 +260,14 @@ public partial class MediaElementPage : BasePage
             var s1 = Calculator.Get(places[p].Coordinate.Latitude, places[p].Coordinate.Longitude, today);
             var s2 = Calculator.Get(places[p].Coordinate.Latitude, places[p].Coordinate.Longitude, today.AddDays(-7));
 #pragma warning restore IDE0042 // Deconstruct variable declaration
+
             s2.rise = s2.rise.AddDays(7);
             s2.set = s2.set.AddDays(7);
-            objects[0, 0, p] = s1.result == DiurnalResult.NormalDay ? Format_time(s1.rise) : "    -    ";
-            objects[1, 0, p] = s1.result == DiurnalResult.NormalDay ? Format_time(s1.set) : "    -    ";
-            objects[0, 1, p] = s2.result == DiurnalResult.NormalDay ? Format_time(s2.rise) : "    -    ";
-            objects[1, 1, p] = s2.result == DiurnalResult.NormalDay ? Format_time(s2.set) : "    -    ";
+
+            objects[0, 0, p] = s1.result == DiurnalResult.NormalDay ? Format_time(s1.rise) : NAtime;
+            objects[1, 0, p] = s1.result == DiurnalResult.NormalDay ? Format_time(s1.set) : NAtime;
+            objects[0, 1, p] = s2.result == DiurnalResult.NormalDay ? Format_time(s2.rise) : NAtime;
+            objects[1, 1, p] = s2.result == DiurnalResult.NormalDay ? Format_time(s2.set) : NAtime;
             if (s1.result == DiurnalResult.NormalDay && s2.result == DiurnalResult.NormalDay)
             {
                 objects[0, 2, p] = Format_time_difference(s2.rise - s1.rise);
@@ -280,8 +275,8 @@ public partial class MediaElementPage : BasePage
             }
             else
             {
-                objects[0, 2, p] = "    -    ";
-                objects[1, 2, p] = "    -    ";
+                objects[0, 2, p] = NAtime;
+                objects[1, 2, p] = NAtime;
             }
         }
 
@@ -295,6 +290,7 @@ public partial class MediaElementPage : BasePage
             }
             sunriseTable += "\n";
         }
+
         sunsetTable = "";
         for (int j = 0; j < 3; j++)
         {
@@ -346,21 +342,12 @@ public static class MyExtensions
 
     public static void Add(this AbsoluteLayout absoluteLayout, IView view, Rect bounds, AbsoluteLayoutFlags flags = AbsoluteLayoutFlags.None)
     {
-        if (view == null)
-            throw new ArgumentNullException(nameof(view));
-        if (bounds.IsEmpty)
-            throw new ArgumentNullException(nameof(bounds));
-
         absoluteLayout.Add(view);
         absoluteLayout.SetLayoutBounds(view, bounds);
         absoluteLayout.SetLayoutFlags(view, flags);
     }
     public static void Add(this AbsoluteLayout absoluteLayout, IView view, Point position)
     {
-        if (view == null)
-            throw new ArgumentNullException(nameof(view));
-        if (position.IsEmpty)
-            throw new ArgumentNullException(nameof(position));
         absoluteLayout.Add(view);
         absoluteLayout.SetLayoutBounds(view, new Rect(position.X, position.Y, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize));
     }
