@@ -30,7 +30,8 @@ public partial class MediaElementPage : BasePage
 
         MediaElement!.PropertyChanged += MediaElement_PropertyChanged;
     }
-
+    //TODO: kort2.mp4 with hardcoded positions
+    //TODO: solfilmen0_utkast.mp4, timing.
     private void BuildGrid()
     {
         Microsoft.Maui.Controls.Grid Thegrid;
@@ -45,10 +46,9 @@ public partial class MediaElementPage : BasePage
                 }
         };
 
-        //AddFilmen(Thegrid);
         Thegrid.AddAtRow(0, AddFilmen());
 
-        Thegrid.AddAtRow(1, Addstate());
+        Thegrid.AddAtRow(1, AddState());
 
         Thegrid.AddAtRow(2, AddButtons());
 
@@ -164,7 +164,7 @@ public partial class MediaElementPage : BasePage
         return infoGrid;
     }
 
-    private HorizontalStackLayout Addstate()
+    private HorizontalStackLayout AddState()
     {
         var horizontalStackLayout = new HorizontalStackLayout
         {
