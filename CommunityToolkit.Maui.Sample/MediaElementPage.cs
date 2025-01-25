@@ -90,29 +90,43 @@ public partial class MediaElementPage : BasePage
 
         AbsoluteLayout absoluteLayout = new()
         {
-            Margin = new Thickness(0)
+            Margin = new Thickness(0),
         };
 
         absoluteLayout.Add(MediaElement, new Rect(0, 0, 400, 240));
         //absoluteLayout.Add(MediaElement, new Point(0, 0));
 
+        //AddRise(image, absoluteLayout);
+        AddSet(image, absoluteLayout);
+        AbsoluteLayout.SetLayoutFlags(image, AbsoluteLayoutFlags.None);
+
+        return absoluteLayout;
+    }
+
+    private static void AddRise(Image image, AbsoluteLayout absoluteLayout)
+    {
         absoluteLayout.Add(image, new Rect(140, 142, 205, 100));
 
         var label = new Label
         {
             Text = sunriseTable,
-            //FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-            //VerticalOptions = LayoutOptions.CenterAndExpand,
-            //HorizontalOptions = LayoutOptions.CenterAndExpand,
             TextColor = Color.FromRgba(255, 255, 255, 128),
             FontSize = 11,
         };
         absoluteLayout.Add(label, new Rect(145, 162, 205, 100));
-
-
-        return absoluteLayout;
     }
+    private static void AddSet(Image image, AbsoluteLayout absoluteLayout)
+    {
+        absoluteLayout.Add(image, new Rect(140, 54, 205, 60));
 
+        var label = new Label
+        {
+            Text = sunsetTable,
+            TextColor = Color.FromRgba(255, 255, 255, 128),
+            FontSize = 11,
+        };
+        absoluteLayout.Add(label, new Rect(145, 62, 205, 110));
+    }
     private Grid AddButtons()
     {
         var buttonGrid = new Microsoft.Maui.Controls.Grid
