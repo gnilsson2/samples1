@@ -23,7 +23,7 @@ public partial class MediaElementPage : BasePage
         MediaElement = new MediaElement
         {
             ShouldAutoPlay = true,
-            Source = MediaSource.FromResource("kort1.mp4")
+            Source = MediaSource.FromResource("kort2.mp4")
         };
 
         BuildGrid();
