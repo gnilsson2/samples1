@@ -23,7 +23,7 @@ public partial class MediaElementPage : BasePage
         MediaElement = new MediaElement
         {
             ShouldAutoPlay = true,
-            Source = MediaSource.FromResource("kort2.mp4")
+            Source = MediaSource.FromResource("kort1.mp4")
         };
 
         BuildGrid();
@@ -96,8 +96,8 @@ public partial class MediaElementPage : BasePage
         absoluteLayout.Add(MediaElement, new Rect(0, 0, 400, 240));
         //absoluteLayout.Add(MediaElement, new Point(0, 0));
 
-        //AddRise(image, absoluteLayout);
-        AddSet(image, absoluteLayout);
+        AddRise(image, absoluteLayout);
+        //AddSet(image, absoluteLayout);
         AbsoluteLayout.SetLayoutFlags(image, AbsoluteLayoutFlags.None);
 
         return absoluteLayout;
