@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Maui.Views;
+﻿#define Medium
+#undef Medium
+using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
@@ -46,7 +48,9 @@ public partial class MediaElementPage : BasePage
                 }
         };
 
-        Thegrid.AddAtRow(0, AddFilmen());
+        Grid x = AddFilmen();
+        Thegrid.AddAtRow(0, x);
+
 
         Thegrid.AddAtRow(1, AddState());
 
@@ -93,17 +97,23 @@ public partial class MediaElementPage : BasePage
             Margin = new Thickness(0),
         };
 
+        MediaElement.AnchorX = 0;
+        MediaElement.AnchorY = 0;
+        MediaElement.Aspect = Aspect.Fill;
+        MediaElement.TranslationX = 0;
+        MediaElement.TranslationY = 0;
+        
         grid.Add(MediaElement);
         //absoluteLayout.Add(MediaElement, new Point(0, 0));
 
-        AddRise(image, grid);
+        AddRiseVertical(image, grid);
         //AddSet(image, absoluteLayout);
         //AbsoluteLayout.SetLayoutFlags(image, AbsoluteLayoutFlags.None);
 
         return grid;
     }
 
-    private static void AddRise(Image image, Grid grid)
+    private static void AddRiseHorizontal(Image image, Grid grid)
     {
         image.AnchorX = 0;
         image.AnchorY = 0;
@@ -127,18 +137,53 @@ public partial class MediaElementPage : BasePage
         };
         grid.Add(label);
     }
-    private static void AddSet(Image image, AbsoluteLayout absoluteLayout)
+    private static void AddRiseVertical(Image image, Grid grid)
     {
-        absoluteLayout.Add(image, new Rect(140, 54, 205, 60));
+        image.AnchorX = 0;
+        image.AnchorY = 0;
+        image.Aspect = Aspect.AspectFill;
+        image.WidthRequest = 200;
+        image.HeightRequest = 50;
+#if Medium
+        image.TranslationX = 40;
+        image.TranslationY = 72;
+#else //7a
+        image.TranslationX = 40;
+        image.TranslationY = 72;
+#endif
+        grid.Add(image);
 
         var label = new Label
         {
-            Text = sunsetTable,
+            Text = sunriseTable,
             TextColor = Color.FromRgba(255, 255, 255, 128),
+            AnchorX = 0,
+            AnchorY = 0,
+#if Medium
+            FontSize = 13,
+            TranslationX = 150,
+            TranslationY = 174,
+#else
             FontSize = 11,
-        };
-        absoluteLayout.Add(label, new Rect(145, 62, 205, 110));
+            TranslationX = 130,
+            TranslationY = 174,
+#endif
+        }; 
+        grid.Add(label);
     }
+
+    //private static void AddSet(Image image, AbsoluteLayout absoluteLayout)
+    //{
+    //    absoluteLayout.Add(image, new Rect(140, 54, 205, 60));
+
+    //    var label = new Label
+    //    {
+    //        Text = sunsetTable,
+    //        TextColor = Color.FromRgba(255, 255, 255, 128),
+    //        FontSize = 11,
+    //    };
+    //    absoluteLayout.Add(label, new Rect(145, 62, 205, 110));
+    //}
     private Grid AddButtons()
     {
         var buttonGrid = new Microsoft.Maui.Controls.Grid
