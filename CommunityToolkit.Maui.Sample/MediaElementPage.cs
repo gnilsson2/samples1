@@ -1,5 +1,7 @@
 ﻿#define Medium
 #undef Medium
+#define pixel_7
+
 using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Maui;
@@ -147,6 +149,10 @@ public partial class MediaElementPage : BasePage
 #if Medium
         image.TranslationX = 40;
         image.TranslationY = 72;
+#elif  pixel_7
+        image.TranslationX = 40;
+        image.TranslationY = 74;
+
 #else //7a
         image.TranslationX = 40;
         image.TranslationY = 72;
@@ -163,6 +169,10 @@ public partial class MediaElementPage : BasePage
             FontSize = 13,
             TranslationX = 150,
             TranslationY = 174,
+#elif pixel_7
+            FontSize = 13,
+            TranslationX = 150,
+            TranslationY = 176,
 #else
             FontSize = 11,
             TranslationX = 130,
