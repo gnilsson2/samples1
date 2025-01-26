@@ -57,7 +57,7 @@ public partial class MediaElementPage : BasePage
         Content = Thegrid;
     }
 
-    private AbsoluteLayout AddFilmen()
+    private Grid AddFilmen()
     {
 
         //var x = DeviceDisplay.Current.MainDisplayInfo.Width;
@@ -88,32 +88,44 @@ public partial class MediaElementPage : BasePage
         //    Children =  { MediaElement, image },
         //};
 
-        AbsoluteLayout absoluteLayout = new()
+        Grid grid = new()
         {
             Margin = new Thickness(0),
         };
 
-        absoluteLayout.Add(MediaElement, new Rect(0, 0, 400, 240));
+        grid.Add(MediaElement);
         //absoluteLayout.Add(MediaElement, new Point(0, 0));
 
-        AddRise(image, absoluteLayout);
+        AddRise(image, grid);
         //AddSet(image, absoluteLayout);
-        AbsoluteLayout.SetLayoutFlags(image, AbsoluteLayoutFlags.None);
+        //AbsoluteLayout.SetLayoutFlags(image, AbsoluteLayoutFlags.None);
 
-        return absoluteLayout;
+        return grid;
     }
 
-    private static void AddRise(Image image, AbsoluteLayout absoluteLayout)
+    private static void AddRise(Image image, Grid grid)
     {
-        absoluteLayout.Add(image, new Rect(140, 142, 205, 100));
+        image.AnchorX = 0;
+        image.AnchorY = 0;
+        image.Aspect = Aspect.AspectFill;
+        image.WidthRequest = 200;
+        image.HeightRequest = 50;
+        image.TranslationX = 40;
+        image.TranslationY = 60;
+
+        grid.Add(image);
 
         var label = new Label
         {
             Text = sunriseTable,
             TextColor = Color.FromRgba(255, 255, 255, 128),
             FontSize = 11,
+            AnchorX = 0,
+            AnchorY = 0,
+            TranslationX = 130,
+            TranslationY = 160,
         };
-        absoluteLayout.Add(label, new Rect(145, 162, 205, 100));
+        grid.Add(label);
     }
     private static void AddSet(Image image, AbsoluteLayout absoluteLayout)
     {
