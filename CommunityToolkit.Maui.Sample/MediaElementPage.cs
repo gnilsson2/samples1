@@ -1,6 +1,6 @@
-﻿#define Medium
-#undef Medium
-#define pixel_7
+﻿//#define p4inch
+//#define Medium
+//#define pixel_7
 
 using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -11,11 +11,13 @@ using Microsoft.Maui.Layouts;
 using PaulSchlyter;
 using System;
 using System.ComponentModel;
+using Microsoft.Maui.Devices;
 
 namespace CommunityToolkit.Maui.Sample;
 public partial class MediaElementPage : BasePage
 {
     private readonly MediaElement MediaElement;
+    Size size;
     public MediaElementPage(BaseViewModel viewModel)
     {
         BindingContext = viewModel;
@@ -34,6 +36,15 @@ public partial class MediaElementPage : BasePage
 
         MediaElement!.PropertyChanged += MediaElement_PropertyChanged;
     }
+
+    protected override void OnSizeAllocated(double width, double height)
+    {
+        base.OnSizeAllocated(width, height);
+        size.Width = width;
+        size.Height = height;
+        infolabel.Text = ReadDeviceDisplay();
+    }
+
     //TODO: kort2.mp4 with hardcoded positions
     //TODO: solfilmen0_utkast.mp4, timing.
     private void BuildGrid()
@@ -46,7 +57,8 @@ public partial class MediaElementPage : BasePage
                     new RowDefinition { Height = new GridLength(250) },
                     new RowDefinition { Height = GridLength.Auto },
                     new RowDefinition { Height = GridLength.Auto },
-                    new RowDefinition { Height = GridLength.Auto }
+                    new RowDefinition { Height = GridLength.Auto },
+                    new RowDefinition { Height = GridLength.Auto },
                 }
         };
 
@@ -60,7 +72,40 @@ public partial class MediaElementPage : BasePage
 
         Thegrid.AddAtRow(3, AddPosition());
 
+        Thegrid.AddAtRow(4, AddInfo());
+
         Content = Thegrid;
+    }
+    Label infolabel;
+    private Layout AddInfo()
+    {
+        var layout = new VerticalStackLayout
+        {
+            Padding = new Thickness(0, 0, 0, 15),
+            //HorizontalOptions = LayoutOptions.Center
+        };
+        infolabel = new Label
+        {
+            //HorizontalOptions = LayoutOptions.Center
+            Text = ReadDeviceDisplay(),
+        };
+        layout.Children.Add(infolabel);
+
+        return layout;
+    }
+    private string ReadDeviceDisplay()
+    {
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+        sb.AppendLine($"Pixel width: {DeviceDisplay.Current.MainDisplayInfo.Width} / Pixel Height: {DeviceDisplay.Current.MainDisplayInfo.Height}");
+        sb.AppendLine($"Density: {DeviceDisplay.Current.MainDisplayInfo.Density}");
+        sb.AppendLine($"Orientation: {DeviceDisplay.Current.MainDisplayInfo.Orientation}");
+        //sb.AppendLine($"Rotation: {DeviceDisplay.Current.MainDisplayInfo.Rotation}");
+        //sb.AppendLine($"Refresh Rate: {DeviceDisplay.Current.MainDisplayInfo.RefreshRate}");
+        sb.AppendLine($"Size.Width: {size.Width}");
+        sb.AppendLine($"size.Height: {size.Height}");
+
+        return sb.ToString();
     }
 
     private Grid AddFilmen()
@@ -165,6 +210,8 @@ public partial class MediaElementPage : BasePage
             TextColor = Color.FromRgba(255, 255, 255, 128),
             AnchorX = 0,
             AnchorY = 0,
+            // 1.095 times larger Rendersize on simulators  = 2.875/2.625 Density7a/Densitypixel_7
+            // but 150/130 = 1.154
 #if Medium
             FontSize = 13,
             TranslationX = 150,
@@ -173,7 +220,7 @@ public partial class MediaElementPage : BasePage
             FontSize = 13,
             TranslationX = 150,
             TranslationY = 176,
-#else
+#else //7a
             FontSize = 11,
             TranslationX = 130,
             TranslationY = 174,
@@ -384,6 +431,7 @@ public partial class MediaElementPage : BasePage
         }
 
     }
+
 }
 
 public abstract class BasePage() : ContentPage
