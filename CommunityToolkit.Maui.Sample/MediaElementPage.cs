@@ -12,12 +12,20 @@ using PaulSchlyter;
 using System;
 using System.ComponentModel;
 using Microsoft.Maui.Devices;
+using Microsoft.Maui.Dispatching;
+using CommunityToolkit.Maui.Core.Primitives;
+using Microsoft.Maui.ApplicationModel;
 
 namespace CommunityToolkit.Maui.Sample;
 public partial class MediaElementPage : BasePage
 {
     private readonly MediaElement MediaElement;
+    static IDispatcherTimer? timer;
+
+    Label infolabel = new();
+    MediaElementState mediaElementState;
     Size size;
+
     public MediaElementPage(BaseViewModel viewModel)
     {
         BindingContext = viewModel;
@@ -35,6 +43,34 @@ public partial class MediaElementPage : BasePage
         BuildGrid();
 
         MediaElement!.PropertyChanged += MediaElement_PropertyChanged;
+        MediaElement!.StateChanged += MediaElementPage_StateChanged;
+        
+        TheTextVertical.IsVisible = false;
+
+    }
+
+    private void MediaElementPage_StateChanged(object? sender, Core.Primitives.MediaStateChangedEventArgs e)
+    {
+        mediaElementState = e.NewState;
+        if (e.NewState==MediaElementState.Playing)
+        {
+            timer = Application.Current!.Dispatcher.CreateTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += (s, e) => DoSomething();
+            timer.Start();
+
+        }
+        infolabel.Text = ReadDeviceDisplay();
+
+    }
+    void DoSomething()
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            TheTextVertical.IsVisible = true; ;
+            infolabel.Text = ReadDeviceDisplay();
+        });
+        timer?.Stop();
     }
 
     protected override void OnSizeAllocated(double width, double height)
@@ -76,7 +112,6 @@ public partial class MediaElementPage : BasePage
 
         Content = Thegrid;
     }
-    Label infolabel;
     private Layout AddInfo()
     {
         var layout = new VerticalStackLayout
@@ -104,6 +139,8 @@ public partial class MediaElementPage : BasePage
         //sb.AppendLine($"Refresh Rate: {DeviceDisplay.Current.MainDisplayInfo.RefreshRate}");
         sb.AppendLine($"Size.Width: {size.Width}");
         sb.AppendLine($"size.Height: {size.Height}");
+        sb.AppendLine($"mediaElementState: {mediaElementState}");
+        sb.AppendLine($"timer: {timer?.IsRunning}");
 
         return sb.ToString();
     }
@@ -124,7 +161,7 @@ public partial class MediaElementPage : BasePage
         //    return (x * screenheight / 480);
         //}
 
-        var image = new Microsoft.Maui.Controls.Image { Source = "overlay_image.png" };
+        Image image = new Microsoft.Maui.Controls.Image { Source = "overlay_image.png" };
 
 
         //AbsoluteLayout.SetLayoutBounds(MediaElement, new Rect(0, 0, 400, 240)); //TODO scale !!!
@@ -159,7 +196,7 @@ public partial class MediaElementPage : BasePage
 
         return grid;
     }
-
+    static Label TheTextVertical;
     private static void AddRiseHorizontal(Image image, Grid grid)
     {
         image.AnchorX = 0;
@@ -207,7 +244,7 @@ public partial class MediaElementPage : BasePage
 #endif
         grid.Add(image);
 
-        var label = new Label
+        TheTextVertical = new Label
         {
             Text = sunriseTable,
             TextColor = Color.FromRgba(255, 255, 255, 128),
@@ -232,8 +269,9 @@ public partial class MediaElementPage : BasePage
             TranslationX = 130,
             TranslationY = 174,
 #endif
-        }; 
-        grid.Add(label);
+        };
+
+        grid.Add(TheTextVertical);
     }
 
     //private static void AddSet(Image image, AbsoluteLayout absoluteLayout)
@@ -272,8 +310,16 @@ public partial class MediaElementPage : BasePage
         Button b2 = new() { Text = "Stop", Command = new Command(OnStopClicked) };
         buttonGrid.Children.Add(b2);
         buttonGrid.SetColumn(b2, 2);
+        Button b3 = new() { Text = "Hepp", Command = new Command(OnHeppClicked) };
+        buttonGrid.Children.Add(b3);
+        buttonGrid.SetColumn(b3, 3);
 
         return buttonGrid;
+    }
+
+    private void OnHeppClicked(object obj)
+    {
+        TheTextVertical.IsVisible = !TheTextVertical.IsVisible;
     }
 
     private Grid AddPosition()
