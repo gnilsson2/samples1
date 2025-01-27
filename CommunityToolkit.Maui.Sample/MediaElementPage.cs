@@ -290,14 +290,13 @@ public partial class MediaElementPage : BasePage
     {
         var buttonGrid = new Microsoft.Maui.Controls.Grid
         {
-            Padding = new Thickness(0, 10, 0, 10),
+            Padding = new Thickness(5, 10, 5, 10),
             ColumnDefinitions =
                 {
                     new ColumnDefinition(),
                     new ColumnDefinition(),
                     new ColumnDefinition(),
                     new ColumnDefinition(),
-                    new ColumnDefinition()
                 },
             ColumnSpacing = 5
         };
