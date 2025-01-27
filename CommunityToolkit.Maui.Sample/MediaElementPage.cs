@@ -1,4 +1,4 @@
-﻿//#define p4inch
+﻿#define p4inch
 //#define Medium
 //#define pixel_7
 
@@ -194,6 +194,9 @@ public partial class MediaElementPage : BasePage
 #if Medium
         image.TranslationX = 40;
         image.TranslationY = 72;
+#elif p4inch
+        image.TranslationX = 45;
+        image.TranslationY = 74;
 #elif  pixel_7
         image.TranslationX = 40;
         image.TranslationY = 74;
@@ -212,15 +215,19 @@ public partial class MediaElementPage : BasePage
             AnchorY = 0,
             // 1.095 times larger Rendersize on simulators  = 2.875/2.625 Density7a/Densitypixel_7
             // but 150/130 = 1.154
-#if Medium
+#if Medium // 2.625 1080x2400
             FontSize = 13,
             TranslationX = 150,
             TranslationY = 174,
-#elif pixel_7
+#elif p4inch //1.5 480x800
+            FontSize = 12,
+            TranslationX = 110,
+            TranslationY = 176,
+#elif pixel_7 // 2.625 1080x2400
             FontSize = 13,
             TranslationX = 150,
             TranslationY = 176,
-#else //7a
+#else //7a //2.875 1080x2400
             FontSize = 11,
             TranslationX = 130,
             TranslationY = 174,
