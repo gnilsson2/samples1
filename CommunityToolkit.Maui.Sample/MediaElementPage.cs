@@ -20,6 +20,9 @@ namespace CommunityToolkit.Maui.Sample;
 public partial class MediaElementPage : BasePage
 {
     private readonly MediaElement MediaElement;
+    private readonly Image OverlayImage;
+    private static Label TheTextVertical;
+  
     static IDispatcherTimer? timer;
 
     Label infolabel = new();
@@ -39,6 +42,7 @@ public partial class MediaElementPage : BasePage
             ShouldAutoPlay = true,
             Source = MediaSource.FromResource("kort1.mp4")
         };
+        OverlayImage = new Microsoft.Maui.Controls.Image { Source = "overlay_image.png" };
 
         BuildGrid();
 
@@ -46,6 +50,7 @@ public partial class MediaElementPage : BasePage
         MediaElement!.StateChanged += MediaElementPage_StateChanged;
         
         TheTextVertical.IsVisible = false;
+        OverlayImage.IsVisible = false;
 
     }
 
@@ -67,7 +72,8 @@ public partial class MediaElementPage : BasePage
     {
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            TheTextVertical.IsVisible = true; ;
+            TheTextVertical.IsVisible = true; 
+            OverlayImage.IsVisible = true;
             infolabel.Text = ReadDeviceDisplay();
         });
         timer?.Stop();
@@ -161,7 +167,6 @@ public partial class MediaElementPage : BasePage
         //    return (x * screenheight / 480);
         //}
 
-        Image image = new Microsoft.Maui.Controls.Image { Source = "overlay_image.png" };
 
 
         //AbsoluteLayout.SetLayoutBounds(MediaElement, new Rect(0, 0, 400, 240)); //TODO scale !!!
@@ -190,13 +195,12 @@ public partial class MediaElementPage : BasePage
         grid.Add(MediaElement);
         //absoluteLayout.Add(MediaElement, new Point(0, 0));
 
-        AddRiseVertical(image, grid);
+        AddRiseVertical(OverlayImage, grid);
         //AddSet(image, absoluteLayout);
         //AbsoluteLayout.SetLayoutFlags(image, AbsoluteLayoutFlags.None);
 
         return grid;
     }
-    static Label TheTextVertical;
     private static void AddRiseHorizontal(Image image, Grid grid)
     {
         image.AnchorX = 0;
@@ -319,6 +323,8 @@ public partial class MediaElementPage : BasePage
     private void OnHeppClicked(object obj)
     {
         TheTextVertical.IsVisible = !TheTextVertical.IsVisible;
+        OverlayImage.IsVisible = !OverlayImage.IsVisible;
+
     }
 
     private Grid AddPosition()
