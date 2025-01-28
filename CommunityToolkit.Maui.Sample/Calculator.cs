@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 namespace PaulSchlyter
 {
     public class Sol(DateTime day, double longitude)
@@ -186,9 +185,9 @@ namespace PaulSchlyter
         static readonly Place[] places =
         [
             new Place { Name = "Lund", Coordinate = new Coordinate(55.708333, 13.199167) },
-        new Place { Name = "Stockholm", Coordinate = new Coordinate(59.329444, 18.068611) },
-        new Place { Name = "Lycksele", Coordinate = new Coordinate(64.596389, 18.675278) },
-        new Place { Name = "Kiruna", Coordinate = new Coordinate(67.848889, 20.302778) }
+            new Place { Name = "Stockholm", Coordinate = new Coordinate(59.329444, 18.068611) },
+            new Place { Name = "Lycksele", Coordinate = new Coordinate(64.596389, 18.675278) },
+            new Place { Name = "Kiruna", Coordinate = new Coordinate(67.848889, 20.302778) }
         ];
 
         public static string? sunriseTable;
@@ -201,8 +200,8 @@ namespace PaulSchlyter
             for (int p = 0; p < places.Length; p++)
             {
 #pragma warning disable IDE0042 // Deconstruct variable declaration
-                var s1 = Calculator.Get(places[p].Coordinate.Latitude, places[p].Coordinate.Longitude, today);
-                var s2 = Calculator.Get(places[p].Coordinate.Latitude, places[p].Coordinate.Longitude, today.AddDays(-7));
+                var s1 = Get(places[p].Coordinate.Latitude, places[p].Coordinate.Longitude, today);
+                var s2 = Get(places[p].Coordinate.Latitude, places[p].Coordinate.Longitude, today.AddDays(-7));
 #pragma warning restore IDE0042 // Deconstruct variable declaration
 
                 s2.rise = s2.rise.AddDays(7);

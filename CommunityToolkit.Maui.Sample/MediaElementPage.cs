@@ -21,7 +21,7 @@ public partial class MediaElementPage : BasePage
 {
     private readonly MediaElement MediaElement;
     private readonly Image OverlayImage;
-    private static Label TheTextVertical;
+    private static Label? TheTextVertical;
   
     static IDispatcherTimer? timer;
 
@@ -49,7 +49,7 @@ public partial class MediaElementPage : BasePage
         MediaElement!.PropertyChanged += MediaElement_PropertyChanged;
         MediaElement!.StateChanged += MediaElementPage_StateChanged;
         
-        TheTextVertical.IsVisible = false;
+        TheTextVertical!.IsVisible = false;
         OverlayImage.IsVisible = false;
 
     }
@@ -72,7 +72,7 @@ public partial class MediaElementPage : BasePage
     {
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            TheTextVertical.IsVisible = true; 
+            TheTextVertical!.IsVisible = true; 
             OverlayImage.IsVisible = true;
             infolabel.Text = ReadDeviceDisplay();
         });
@@ -118,7 +118,7 @@ public partial class MediaElementPage : BasePage
 
         Content = Thegrid;
     }
-    private Layout AddInfo()
+    private VerticalStackLayout AddInfo()
     {
         var layout = new VerticalStackLayout
         {
@@ -136,7 +136,7 @@ public partial class MediaElementPage : BasePage
     }
     private string ReadDeviceDisplay()
     {
-        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        System.Text.StringBuilder sb = new();
 
         sb.AppendLine($"Pixel width: {DeviceDisplay.Current.MainDisplayInfo.Width} / Pixel Height: {DeviceDisplay.Current.MainDisplayInfo.Height}");
         sb.AppendLine($"Density: {DeviceDisplay.Current.MainDisplayInfo.Density}");
@@ -322,7 +322,7 @@ public partial class MediaElementPage : BasePage
 
     private void OnHeppClicked(object obj)
     {
-        TheTextVertical.IsVisible = !TheTextVertical.IsVisible;
+        TheTextVertical!.IsVisible = !TheTextVertical.IsVisible;
         OverlayImage.IsVisible = !OverlayImage.IsVisible;
 
     }
