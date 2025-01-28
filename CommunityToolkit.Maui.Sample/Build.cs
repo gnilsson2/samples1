@@ -1,4 +1,8 @@
-﻿using CommunityToolkit.Maui.Views;
+﻿#define p4inch
+//#define Medium
+//#define pixel_7
+
+using CommunityToolkit.Maui.Views;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
@@ -7,6 +11,8 @@ using PaulSchlyter;
 namespace CommunityToolkit.Maui.Sample;
 public partial class MediaElementPage : BasePage
 {
+    //TODO: kort2.mp4 with hardcoded positions
+
     private void BuildGrid()
     {
         Microsoft.Maui.Controls.Grid Thegrid;
