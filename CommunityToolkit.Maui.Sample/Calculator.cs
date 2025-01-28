@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 namespace PaulSchlyter
 {
     public class Sol(DateTime day, double longitude)
@@ -156,5 +157,97 @@ namespace PaulSchlyter
             Calculator calculator = new(latitude, longitude, date);
             return (calculator.Sunrise, calculator.Sunset, diurnalResult);
         }
+
+
+        private static string Format_time(DateTime dateTime)
+        {
+            return $"  {dateTime.AddSeconds(30):H:mm}   ";
+        }
+
+        private static string Format_time_difference(TimeSpan result)
+        {
+            var fmt = (result < TimeSpan.Zero ? "\\-" : "\\+") + "h\\:mm";
+            var diff = result.ToString(fmt);
+            return diff + "   ";
+        }
+        private const string NAtime = "    -    ";
+
+        class Coordinate(double latitude, double longitude)
+        {
+            public double Latitude { get; set; } = latitude;
+            public double Longitude { get; set; } = longitude;
+        }
+        class Place
+        {
+            public required string Name { get; set; }
+            public required Coordinate Coordinate { get; set; }
+        }
+
+        static readonly Place[] places =
+        [
+            new Place { Name = "Lund", Coordinate = new Coordinate(55.708333, 13.199167) },
+        new Place { Name = "Stockholm", Coordinate = new Coordinate(59.329444, 18.068611) },
+        new Place { Name = "Lycksele", Coordinate = new Coordinate(64.596389, 18.675278) },
+        new Place { Name = "Kiruna", Coordinate = new Coordinate(67.848889, 20.302778) }
+        ];
+
+        public static string? sunriseTable;
+        public static string? sunsetTable;
+
+        public static void Calculate(DateTime today)
+        {
+            object[,,] objects = new object[2, 3, places.Length];
+
+            for (int p = 0; p < places.Length; p++)
+            {
+#pragma warning disable IDE0042 // Deconstruct variable declaration
+                var s1 = Calculator.Get(places[p].Coordinate.Latitude, places[p].Coordinate.Longitude, today);
+                var s2 = Calculator.Get(places[p].Coordinate.Latitude, places[p].Coordinate.Longitude, today.AddDays(-7));
+#pragma warning restore IDE0042 // Deconstruct variable declaration
+
+                s2.rise = s2.rise.AddDays(7);
+                s2.set = s2.set.AddDays(7);
+
+                objects[0, 0, p] = s1.result == DiurnalResult.NormalDay ? Format_time(s1.rise) : NAtime;
+                objects[1, 0, p] = s1.result == DiurnalResult.NormalDay ? Format_time(s1.set) : NAtime;
+                objects[0, 1, p] = s2.result == DiurnalResult.NormalDay ? Format_time(s2.rise) : NAtime;
+                objects[1, 1, p] = s2.result == DiurnalResult.NormalDay ? Format_time(s2.set) : NAtime;
+                if (s1.result == DiurnalResult.NormalDay && s2.result == DiurnalResult.NormalDay)
+                {
+                    objects[0, 2, p] = Format_time_difference(s2.rise - s1.rise);
+                    objects[1, 2, p] = Format_time_difference(s1.set - s2.set);
+                }
+                else
+                {
+                    objects[0, 2, p] = NAtime;
+                    objects[1, 2, p] = NAtime;
+                }
+            }
+
+            sunriseTable = "";
+            for (int j = 0; j < 3; j++)
+            {
+                for (int p = 0; p < places.Length; p++)
+                {
+                    sunriseTable += (objects[0, j, p]);
+                    sunriseTable += "    ";
+                }
+                sunriseTable += "\n";
+            }
+
+            sunsetTable = "";
+            for (int j = 0; j < 3; j++)
+            {
+                for (int p = 0; p < places.Length; p++)
+                {
+                    sunsetTable += (objects[1, j, p]);
+                    sunsetTable += "    ";
+                }
+                sunsetTable += "\n";
+            }
+
+        }
     }
+
+
 }
