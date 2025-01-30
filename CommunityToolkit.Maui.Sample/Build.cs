@@ -20,7 +20,7 @@ public partial class MediaElementPage : BasePage
         {
             RowDefinitions =
                 {
-                    new RowDefinition { Height = new GridLength(250) },
+                    new RowDefinition { Height = new GridLength(150) },
                     new RowDefinition { Height = GridLength.Auto },
                     new RowDefinition { Height = GridLength.Auto },
                     new RowDefinition { Height = GridLength.Auto },
