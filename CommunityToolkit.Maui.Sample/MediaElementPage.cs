@@ -27,7 +27,7 @@ public partial class MediaElementPage : BasePage
         MediaElement = new MediaElement
         {
             ShouldAutoPlay = true,
-            Source = MediaSource.FromResource("solfilmen0_utkast.mp4")
+            Source = MediaSource.FromResource("kort1.mp4")
         };
         OverlayImage = new Microsoft.Maui.Controls.Image { Source = "overlay_image.png" };
 
@@ -35,16 +35,20 @@ public partial class MediaElementPage : BasePage
 
         MediaElement!.PositionChanged += MediaElementPage_PositionChanged;
 
-        TheTextVertical!.IsVisible = false;
-        OverlayImage.IsVisible = false;
+        //TheTextVertical!.IsVisible = false;
+        //OverlayImage.IsVisible = false;
+        TheTextVertical!.IsVisible = true;
+        OverlayImage.IsVisible = true;
+
+
         BindingContext = this;
     }
 
     private void MediaElementPage_PositionChanged(object? sender, EventArgs e)
     {
-        TheTextVertical!.IsVisible =
-        OverlayImage.IsVisible =
-        MediaElement.Position.Between(TimeSpan.FromMilliseconds(9500), TimeSpan.FromMilliseconds(30000));
+        //TheTextVertical!.IsVisible =
+        //OverlayImage.IsVisible =
+        //MediaElement.Position.Between(TimeSpan.FromMilliseconds(9500), TimeSpan.FromMilliseconds(30000));
     }
 
     //TODO: solfilmen0_utkast.mp4, timing.
