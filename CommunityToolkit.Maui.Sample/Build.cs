@@ -8,8 +8,8 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 using PaulSchlyter;
-using static System.Net.Mime.MediaTypeNames;
 using Image = Microsoft.Maui.Controls.Image;
+using Label = Microsoft.Maui.Controls.Label;
 namespace CommunityToolkit.Maui.Sample;
 public partial class MediaElementPage : BasePage
 {
@@ -100,15 +100,20 @@ public partial class MediaElementPage : BasePage
     {
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
-            canvas.DrawImage(OverlayImage, 10, 10, OverlayImage!.Width, OverlayImage!.Height);
-            canvas.FontSize = 18;
-            canvas.DrawString("Text is left aligned.", 20, 20, 380, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
+            canvas.DrawImage(OverlayImage, 0, 0, 460, 48);
+            canvas.FontSize = 10;
+            canvas.FontColor = Color.FromRgba(255, 255, 255, 128);
+            canvas.DrawString(Calculator.sunriseTable, 0, 0, 380, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
         }
     }
     private void AddRiseHorizontal2(Grid grid)
     {
         GraphicsView graphicsView = new();
         graphicsView.Drawable = new GraphicsDrawable();
+        graphicsView.WidthRequest = 460;
+        graphicsView.HeightRequest = 48;
+        graphicsView.TranslationX = 100;
+        graphicsView.TranslationY = 51;
         grid.Add(graphicsView);
     }
 
