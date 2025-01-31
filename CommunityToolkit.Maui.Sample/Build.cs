@@ -108,7 +108,7 @@ public partial class MediaElementPage : BasePage
     }
     private void AddRiseHorizontal2(Grid grid)
     {
-        GraphicsView graphicsView = new();
+        graphicsView = new();
         graphicsView.Drawable = new GraphicsDrawable();
         graphicsView.WidthRequest = 460;
         graphicsView.HeightRequest = 48;

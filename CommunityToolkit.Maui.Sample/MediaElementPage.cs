@@ -17,6 +17,7 @@ public partial class MediaElementPage : BasePage
     private readonly MediaElement MediaElement;
     private static IImage? OverlayImage;
     private static Label? TheTextVertical;
+    GraphicsView? graphicsView;
 
     Label infolabel = new();
 
@@ -44,20 +45,14 @@ public partial class MediaElementPage : BasePage
 
         MediaElement!.PositionChanged += MediaElementPage_PositionChanged;
 
-        //TheTextVertical!.IsVisible = false;
-        //OverlayImage.IsVisible = false;
-        //TheTextVertical!.IsVisible = true;
-        //OverlayImage.IsVisible = true;
-
+        graphicsView!.IsVisible = false;
 
         BindingContext = this;
     }
 
     private void MediaElementPage_PositionChanged(object? sender, EventArgs e)
     {
-        //TheTextVertical!.IsVisible =
-        //OverlayImage.IsVisible =
-        //MediaElement.Position.Between(TimeSpan.FromMilliseconds(9500), TimeSpan.FromMilliseconds(30000));
+        //graphicsView!.IsVisible = MediaElement.Position.Between(TimeSpan.FromMilliseconds(9500), TimeSpan.FromMilliseconds(30000));
     }
 
     //TODO: solfilmen0_utkast.mp4, timing.
@@ -74,9 +69,7 @@ public partial class MediaElementPage : BasePage
 
     private void OnHeppClicked(object obj)
     {
-        //TheTextVertical!.IsVisible = !TheTextVertical.IsVisible;
-        //OverlayImage.IsVisible = !OverlayImage.IsVisible;
-
+        graphicsView!.IsVisible = !graphicsView!.IsVisible;
     }
 
     private void OnPlayClicked() => MediaElement.Play();
