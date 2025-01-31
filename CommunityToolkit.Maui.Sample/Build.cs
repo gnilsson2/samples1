@@ -8,6 +8,8 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 using PaulSchlyter;
+using static System.Net.Mime.MediaTypeNames;
+using Image = Microsoft.Maui.Controls.Image;
 namespace CommunityToolkit.Maui.Sample;
 public partial class MediaElementPage : BasePage
 {
@@ -99,6 +101,8 @@ public partial class MediaElementPage : BasePage
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
             canvas.DrawImage(OverlayImage, 10, 10, OverlayImage!.Width, OverlayImage!.Height);
+            canvas.FontSize = 18;
+            canvas.DrawString("Text is left aligned.", 20, 20, 380, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
         }
     }
     private void AddRiseHorizontal2(Grid grid)
