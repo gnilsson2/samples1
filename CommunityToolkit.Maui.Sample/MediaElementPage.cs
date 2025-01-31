@@ -3,15 +3,19 @@ using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Devices;
+using Microsoft.Maui.Graphics.Platform;
 using PaulSchlyter;
 using System;
+using System.IO;
+using System.Reflection;
+using IImage = Microsoft.Maui.Graphics.IImage;
 
 namespace CommunityToolkit.Maui.Sample;
 
 public partial class MediaElementPage : BasePage
 {
     private readonly MediaElement MediaElement;
-    private readonly static Image OverlayImage = new Microsoft.Maui.Controls.Image { Source = "overlay_image.png" };
+    private static IImage? OverlayImage;
     private static Label? TheTextVertical;
 
     Label infolabel = new();
@@ -30,14 +34,20 @@ public partial class MediaElementPage : BasePage
             Source = MediaSource.FromResource("kort1.mp4")
         };
 
+        Assembly assembly = GetType().GetTypeInfo().Assembly;
+        using (Stream stream = assembly!.GetManifestResourceStream("CommunityToolkit.Maui.Sample.Resources.Images.overlay_image.png")!)
+        {
+            OverlayImage = PlatformImage.FromStream(stream);
+        }
+
         BuildGrid();
 
         MediaElement!.PositionChanged += MediaElementPage_PositionChanged;
 
         //TheTextVertical!.IsVisible = false;
         //OverlayImage.IsVisible = false;
-        TheTextVertical!.IsVisible = true;
-        OverlayImage.IsVisible = true;
+        //TheTextVertical!.IsVisible = true;
+        //OverlayImage.IsVisible = true;
 
 
         BindingContext = this;
@@ -64,8 +74,8 @@ public partial class MediaElementPage : BasePage
 
     private void OnHeppClicked(object obj)
     {
-        TheTextVertical!.IsVisible = !TheTextVertical.IsVisible;
-        OverlayImage.IsVisible = !OverlayImage.IsVisible;
+        //TheTextVertical!.IsVisible = !TheTextVertical.IsVisible;
+        //OverlayImage.IsVisible = !OverlayImage.IsVisible;
 
     }
 

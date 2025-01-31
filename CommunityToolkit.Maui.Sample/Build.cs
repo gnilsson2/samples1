@@ -1,5 +1,5 @@
 ﻿//#define p4inch
-//#define Medium
+#define Medium
 //#define pixel_7
 
 using CommunityToolkit.Maui.Views;
@@ -87,13 +87,26 @@ public partial class MediaElementPage : BasePage
         //absoluteLayout.Add(MediaElement, new Point(0, 0));
 
         //AddRiseVertical(OverlayImage, grid);
-        AddRiseHorizontal(OverlayImage, grid);
+        AddRiseHorizontal2(grid);
         //AddSet(image, absoluteLayout);
         //AbsoluteLayout.SetLayoutFlags(image, AbsoluteLayoutFlags.None);
 
         return grid;
     }
 
+    public class GraphicsDrawable : IDrawable
+    {
+        public void Draw(ICanvas canvas, RectF dirtyRect)
+        {
+            canvas.DrawImage(OverlayImage, 10, 10, OverlayImage!.Width, OverlayImage!.Height);
+        }
+    }
+    private void AddRiseHorizontal2(Grid grid)
+    {
+        GraphicsView graphicsView = new();
+        graphicsView.Drawable = new GraphicsDrawable();
+        grid.Add(graphicsView);
+    }
 
     private static void AddRiseHorizontal(Image image, Grid grid)
     {
