@@ -11,7 +11,7 @@ namespace CommunityToolkit.Maui.Sample;
 public partial class MediaElementPage : BasePage
 {
     private readonly MediaElement MediaElement;
-    private readonly Image OverlayImage;
+    private readonly static Image OverlayImage = new Microsoft.Maui.Controls.Image { Source = "overlay_image.png" };
     private static Label? TheTextVertical;
 
     Label infolabel = new();
@@ -29,7 +29,6 @@ public partial class MediaElementPage : BasePage
             ShouldAutoPlay = true,
             Source = MediaSource.FromResource("kort1.mp4")
         };
-        OverlayImage = new Microsoft.Maui.Controls.Image { Source = "overlay_image.png" };
 
         BuildGrid();
 
