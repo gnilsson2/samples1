@@ -100,6 +100,7 @@ public partial class MediaElementPage : BasePage
     {
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
+
             canvas.DrawImage(OverlayImage, 0, 0, 460, 48);
             canvas.FontSize = 10;
             canvas.FontColor = Color.FromRgba(255, 255, 255, 128);
@@ -110,10 +111,14 @@ public partial class MediaElementPage : BasePage
     {
         graphicsView = new();
         graphicsView.Drawable = new GraphicsDrawable();
-        graphicsView.WidthRequest = 460;
+        graphicsView.AnchorX = 0;
+        graphicsView.AnchorY = 0;
+        graphicsView.WidthRequest = 200; // remove
         graphicsView.HeightRequest = 48;
-        graphicsView.TranslationX = 100;
+        graphicsView.TranslationX = -30; // 145;
         graphicsView.TranslationY = 51;
+        graphicsView.ScaleX = 3.1;       // 1.4;
+        graphicsView.ScaleY = 1;
         grid.Add(graphicsView);
     }
 
