@@ -108,9 +108,11 @@ public partial class MediaElementPage : BasePage
             canvas.FontSize = 10;
             canvas.FontColor = Color.FromRgba(255, 255, 255, 128);
 
-            const float scaleX = 0.4496717724288840f;
-            canvas.DrawImage(OverlayImage, dirtyRect.Width*0.357f, 100, dirtyRect.Width*0.504f, 48);
-            canvas.DrawString(Calculator.sunriseTable, 0, 0, dirtyRect.Width*scaleX, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
+            //const float scaleX = 0.4496717724288840f;
+            const float factorX = 0.357f;
+            const float factorW = 0.504f;
+            canvas.DrawImage(OverlayImage, dirtyRect.Width*factorX, 100, dirtyRect.Width*factorW, 48);
+            canvas.DrawString(Calculator.sunriseTable, dirtyRect.Width*factorX, 100, dirtyRect.Width*factorW, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
         }
     }
     private void AddRise(Grid grid)
