@@ -5,9 +5,11 @@
 using CommunityToolkit.Maui.Views;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Devices;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 using PaulSchlyter;
+using System;
 using Image = Microsoft.Maui.Controls.Image;
 using Label = Microsoft.Maui.Controls.Label;
 namespace CommunityToolkit.Maui.Sample;
@@ -86,120 +88,124 @@ public partial class MediaElementPage : BasePage
         MediaElement.TranslationY = 0;
 
         grid.Add(MediaElement);
-        //absoluteLayout.Add(MediaElement, new Point(0, 0));
 
-        //AddRiseVertical(OverlayImage, grid);
-        AddRiseHorizontal2(grid);
-        //AddSet(image, absoluteLayout);
-        //AbsoluteLayout.SetLayoutFlags(image, AbsoluteLayoutFlags.None);
+        //This dont work, would need DeviceDisplay.Current.MainDisplayInfoChanged += 
+        //if (DeviceDisplay.Current.MainDisplayInfo.Orientation == DisplayOrientation.Portrait)
+        //    AddRisePortrait(grid);
+        //else
+        //    AddRiseLandscape(grid);
+
+        AddRise(grid);
 
         return grid;
     }
+
 
     public class GraphicsDrawable : IDrawable
     {
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
-
-            canvas.DrawImage(OverlayImage, 0, 0, 460, 48);
             canvas.FontSize = 10;
             canvas.FontColor = Color.FromRgba(255, 255, 255, 128);
-            canvas.DrawString(Calculator.sunriseTable, 0, 0, 380, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
+
+            const float scaleX = 0.4496717724288840f;
+            canvas.DrawImage(OverlayImage, dirtyRect.Width*0.357f, 100, dirtyRect.Width*0.504f, 48);
+            canvas.DrawString(Calculator.sunriseTable, 0, 0, dirtyRect.Width*scaleX, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
         }
     }
-    private void AddRiseHorizontal2(Grid grid)
+    private void AddRise(Grid grid)
     {
-        graphicsView = new();
-        graphicsView.Drawable = new GraphicsDrawable();
-        graphicsView.AnchorX = 0;
-        graphicsView.AnchorY = 0;
-        graphicsView.WidthRequest = 200; // remove
-        graphicsView.HeightRequest = 48;
-        graphicsView.TranslationX = -30; // 145;
-        graphicsView.TranslationY = 51;
-        graphicsView.ScaleX = 3.1;       // 1.4;
-        graphicsView.ScaleY = 1;
-        grid.Add(graphicsView);
+        OverlayView = new();
+        OverlayView.Drawable = new GraphicsDrawable();
+        //OverlayView.AnchorX = 0;
+        //OverlayView.AnchorY = 0;
+        //OverlayView.WidthRequest = 200; // remove
+        //OverlayView.HeightRequest = 48;
+        //OverlayView.TranslationX = -30; // 145;
+        //OverlayView.TranslationY = 51;
+        //OverlayView.ScaleX = 3.1;       // 1.4;
+        //OverlayView.ScaleY = 1;
+        grid.Add(OverlayView);
     }
 
-    private static void AddRiseHorizontal(Image image, Grid grid)
-    {
-        image.AnchorX = 0;
-        image.AnchorY = 0;
-        image.Aspect = Aspect.AspectFill;
-#if Medium
-        // Grid: 0, 0, 914.2857142857143, 150
-        // MediaEl: 0, 0, 914.2857142857143, 150.0952380952381
-        // Image: 327.04761904761904, 51.04761904761905, 260.1904761904762, 48
-        // Label: 0, 0, 914.2857142857143, 150.0952380952381
+//    private static void AddRiseHorizontal(Image image, Grid grid)
+//    {
+//        image.AnchorX = 0;
+//        image.AnchorY = 0;
+//        image.Aspect = Aspect.AspectFill;
+//#if Medium
+//        // Grid: 0, 0, 914.2857142857143, 150
+//        // MediaEl: 0, 0, 914.2857142857143, 150.0952380952381
+//        // Image: 327.04761904761904, 51.04761904761905, 260.1904761904762, 48
+//        // Label: 0, 0, 914.2857142857143, 150.0952380952381
 
-        image.WidthRequest = 460;
-        image.HeightRequest = 48;
-        image.TranslationX = 100;
-        image.TranslationY = 51;
-#elif p4inch
-        // Grid: 0, 0, 533.3333333333334, 150
-        // MediaEl: 0, 0, 533.3333333333334, 150
-        // Image: 136.66666666666669, 51, 260, 48
-        // Label: 0, 0, 533.3333333333334, 150
+//        image.WidthRequest = 460;
+//        image.HeightRequest = 48;
+//        image.TranslationX = 100;
+//        image.TranslationY = 51;
+//#elif p4inch
+//        // Grid: 0, 0, 533.3333333333334, 150
+//        // MediaEl: 0, 0, 533.3333333333334, 150
+//        // Image: 136.66666666666669, 51, 260, 48
+//        // Label: 0, 0, 533.3333333333334, 150
         
-        image.WidthRequest = 260;
-        image.HeightRequest = 48;
-        image.TranslationX = 50;
-        image.TranslationY = 50;
-#elif pixel_7
-        // Grid: 0, 0, 862.4761904761905, 150
-        // MediaEl: 0, 0, 862.4761904761905, 150.0952380952381
-        // Image: 301.1428571428571, 51.04761904761905, 260.1904761904762, 48
-        // Label: 0, 0, 862.4761904761905, 150.0952380952381
+//        image.WidthRequest = 260;
+//        image.HeightRequest = 48;
+//        image.TranslationX = 50;
+//        image.TranslationY = 50;
+//#elif pixel_7
+//        // Grid: 0, 0, 862.4761904761905, 150
+//        // MediaEl: 0, 0, 862.4761904761905, 150.0952380952381
+//        // Image: 301.1428571428571, 51.04761904761905, 260.1904761904762, 48
+//        // Label: 0, 0, 862.4761904761905, 150.0952380952381
 
-        image.WidthRequest = 460;
-        image.HeightRequest = 48;
-        image.TranslationX = 100;
-        image.TranslationY = 50;
+//        image.WidthRequest = 460;
+//        image.HeightRequest = 48;
+//        image.TranslationX = 100;
+//        image.TranslationY = 50;
 
-#else //7a
-        // Grid:    0, 0, 745.7391304347826, 150
-        // MediaEl: 0, 0, 745.7391304347826, 150.2608695652174
-        // Image:   152.8695652173913, 51.1304347826087, 440, 48
-        // Label:   0, 0, 745.7391304347826, 150.2608695652174
+//#else //7a
+//        // Grid:    0, 0, 745.7391304347826, 150
+//        // MediaEl: 0, 0, 745.7391304347826, 150.2608695652174
+//        // Image:   152.8695652173913, 51.1304347826087, 440, 48
+//        // Label:   0, 0, 745.7391304347826, 150.2608695652174
 
-        image.WidthRequest = 440;
-        image.HeightRequest = 48;
-        image.TranslationX = 110;
-        image.TranslationY = 51;
-#endif
-        grid.Add(image);
+//        image.WidthRequest = 440;
+//        image.HeightRequest = 48;
+//        image.TranslationX = 110;
+//        image.TranslationY = 51;
+//#endif
+//        grid.Add(image);
 
-        TheTextVertical = new Label
-        {
-            Text = Calculator.sunriseTable, //Needs more spaces on GridLength(150)
-            TextColor = Color.FromRgba(255, 255, 255, 128),
-            AnchorX = 0,
-            AnchorY = 0,
-            // 1.095 times larger Rendersize on simulators  = 2.875/2.625 Density7a/Densitypixel_7
-            // but 150/130 = 1.154
-#if Medium // 2.625 1080x2400
-            FontSize = 10,
-            TranslationX = 330,
-            TranslationY = 100,
-#elif p4inch //1.5 480x800
-            FontSize = 10, 
-            TranslationX = 190,
-            TranslationY = 100,
-#elif pixel_7 // 2.625 1080x2400
-            FontSize = 10,
-            TranslationX = 310,
-            TranslationY = 100,
-#else //7a //2.875 1080x2400
-            FontSize = 10,
-            TranslationX = 280,
-            TranslationY = 100,
-#endif
-        };
+//        TheTextVertical = new Label
+//        {
+//            Text = Calculator.sunriseTable, //Needs more spaces on GridLength(150)
+//            TextColor = Color.FromRgba(255, 255, 255, 128),
+//            AnchorX = 0,
+//            AnchorY = 0,
+//            // 1.095 times larger Rendersize on simulators  = 2.875/2.625 Density7a/Densitypixel_7
+//            // but 150/130 = 1.154
+//#if Medium // 2.625 1080x2400
+//            FontSize = 10,
+//            TranslationX = 330,
+//            TranslationY = 100,
+//#elif p4inch //1.5 480x800
+//            FontSize = 10, 
+//            TranslationX = 190,
+//            TranslationY = 100,
+//#elif pixel_7 // 2.625 1080x2400
+//            FontSize = 10,
+//            TranslationX = 310,
+//            TranslationY = 100,
+//#else //7a //2.875 1080x2400
+//            FontSize = 10,
+//            TranslationX = 280,
+//            TranslationY = 100,
+//#endif
+//        };
 
-        grid.Add(TheTextVertical);
-    }
+//        grid.Add(TheTextVertical);
+//    }
 
 
     private static void AddRiseVertical(Image image, Grid grid)

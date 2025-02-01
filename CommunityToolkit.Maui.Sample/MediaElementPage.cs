@@ -8,6 +8,7 @@ using PaulSchlyter;
 using System;
 using System.IO;
 using System.Reflection;
+using static System.Net.Mime.MediaTypeNames;
 using IImage = Microsoft.Maui.Graphics.IImage;
 
 namespace CommunityToolkit.Maui.Sample;
@@ -17,7 +18,7 @@ public partial class MediaElementPage : BasePage
     private readonly MediaElement MediaElement;
     private static IImage? OverlayImage;
     private static Label? TheTextVertical;
-    GraphicsView? graphicsView;
+    GraphicsView? OverlayView;
 
     Label infolabel = new();
 
@@ -45,7 +46,7 @@ public partial class MediaElementPage : BasePage
 
         MediaElement!.PositionChanged += MediaElementPage_PositionChanged;
 
-        graphicsView!.IsVisible = false;
+        OverlayView!.IsVisible = false;
 
         BindingContext = this;
     }
@@ -60,16 +61,18 @@ public partial class MediaElementPage : BasePage
     {
         System.Text.StringBuilder sb = new();
 
-        sb.AppendLine($"Pixel width: {DeviceDisplay.Current.MainDisplayInfo.Width} / Pixel Height: {DeviceDisplay.Current.MainDisplayInfo.Height}");
-        sb.AppendLine($"Density: {DeviceDisplay.Current.MainDisplayInfo.Density}");
+        sb.Append($"Pixel width: {DeviceDisplay.Current.MainDisplayInfo.Width} / Pixel Height: {DeviceDisplay.Current.MainDisplayInfo.Height}");
+        sb.AppendLine($"  Density: {DeviceDisplay.Current.MainDisplayInfo.Density}");
         sb.AppendLine($"Orientation: {DeviceDisplay.Current.MainDisplayInfo.Orientation}");
+        sb.AppendLine($"MediaElement Width: {MediaElement.Width:f1} Height: {MediaElement.Height:f1}");
 
         return sb.ToString();
     }
 
     private void OnHeppClicked(object obj)
     {
-        graphicsView!.IsVisible = !graphicsView!.IsVisible;
+        OverlayView!.IsVisible = !OverlayView!.IsVisible;
+        infolabel.Text = ReadDeviceDisplay();
     }
 
     private void OnPlayClicked() => MediaElement.Play();
