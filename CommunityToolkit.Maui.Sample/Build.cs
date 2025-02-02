@@ -112,7 +112,10 @@ public partial class MediaElementPage : BasePage
             const float factorX = 0.357f;
             const float factorW = 0.504f;
             canvas.DrawImage(OverlayImage, dirtyRect.Width*factorX, 100, dirtyRect.Width*factorW, 48);
-            canvas.DrawString(Calculator.sunriseTable, dirtyRect.Width*factorX, 100, dirtyRect.Width*factorW, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
+            //canvas.FontSize = 5;
+            const float Sx = 1.9f;
+            canvas.Scale(Sx, 1.0f);
+            canvas.DrawString(Calculator.sunriseTable, dirtyRect.Width*factorX/Sx, 100, dirtyRect.Width*factorW, 100, HorizontalAlignment.Justified, VerticalAlignment.Top);
         }
     }
     private void AddRise(Grid grid)
