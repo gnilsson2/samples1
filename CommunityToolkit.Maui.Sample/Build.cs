@@ -7,9 +7,11 @@ using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Devices;
 using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Graphics.Platform;
 using Microsoft.Maui.Layouts;
 using PaulSchlyter;
 using System;
+using IImage = Microsoft.Maui.Graphics.IImage;
 using Image = Microsoft.Maui.Controls.Image;
 using Label = Microsoft.Maui.Controls.Label;
 namespace CommunityToolkit.Maui.Sample;
@@ -19,8 +21,8 @@ public partial class MediaElementPage : BasePage
 
     private void BuildGrid()
     {
-        Microsoft.Maui.Controls.Grid Thegrid;
-        Thegrid = new Microsoft.Maui.Controls.Grid
+        Grid Thegrid;
+        Thegrid = new Grid
         {
             RowDefinitions =
                 {
@@ -100,28 +102,41 @@ public partial class MediaElementPage : BasePage
         return grid;
     }
 
-
     public class GraphicsDrawable : IDrawable
+    {
+        private readonly IImage _image;
+        private readonly string _text;
+
+        public GraphicsDrawable(IImage image, string text)
+        {
+            _image = image;
+            _text = text;
+        }
+
+        public void Draw(ICanvas canvas, RectF dirtyRect)
+        {
+            // Draw the image
+            canvas.DrawImage(_image, 0, 0, dirtyRect.Width, dirtyRect.Height);
+
+            // Draw the text
+            canvas.FontSize = 7;
+            canvas.FontColor = Colors.Red;
+            canvas.DrawString(_text, 0, 0, dirtyRect.Width, dirtyRect.Height, HorizontalAlignment.Left, VerticalAlignment.Top);
+        }
+    }
+    public class GraphicsDrawable2 : IDrawable
     {
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
-            canvas.FontSize = 10;
-            canvas.FontColor = Color.FromRgba(255, 255, 255, 128);
-
-            //const float scaleX = 0.4496717724288840f;
             const float factorX = 0.357f;
             const float factorW = 0.504f;
-            canvas.DrawImage(OverlayImage, dirtyRect.Width*factorX, 100, dirtyRect.Width*factorW, 48);
-            //canvas.FontSize = 5;
-            const float Sx = 1.9f;
-            canvas.Scale(Sx, 1.0f);
-            canvas.DrawString(Calculator.sunriseTable, dirtyRect.Width*factorX/Sx, 100, dirtyRect.Width*factorW, 100, HorizontalAlignment.Justified, VerticalAlignment.Top);
+            canvas.DrawImage(SavedImage, dirtyRect.Width*factorX, 100, dirtyRect.Width*factorW, 48);
         }
     }
     private void AddRise(Grid grid)
     {
         OverlayView = new();
-        OverlayView.Drawable = new GraphicsDrawable();
+        OverlayView.Drawable = new GraphicsDrawable2();
         //OverlayView.AnchorX = 0;
         //OverlayView.AnchorY = 0;
         //OverlayView.WidthRequest = 200; // remove
@@ -297,7 +312,7 @@ public partial class MediaElementPage : BasePage
     //}
     private Grid AddButtons()
     {
-        var buttonGrid = new Microsoft.Maui.Controls.Grid
+        var buttonGrid = new Grid
         {
             Padding = new Thickness(5, 10, 5, 10),
             ColumnDefinitions =
@@ -338,7 +353,7 @@ public partial class MediaElementPage : BasePage
             HorizontalTextAlignment = TextAlignment.End
         };
         durationLabel.SetBinding(Label.TextProperty, new Binding("Duration", source: MediaElement));
-        var infoGrid = new Microsoft.Maui.Controls.Grid
+        var infoGrid = new Grid
         {
             HorizontalOptions = LayoutOptions.Fill
         };

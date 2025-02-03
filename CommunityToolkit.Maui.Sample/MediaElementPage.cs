@@ -3,6 +3,7 @@ using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Devices;
+using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Graphics.Platform;
 using PaulSchlyter;
 using System;
@@ -17,6 +18,7 @@ public partial class MediaElementPage : BasePage
 {
     private readonly MediaElement MediaElement;
     private static IImage? OverlayImage;
+    private static IImage? SavedImage;
     private static Label? TheTextVertical;
     GraphicsView? OverlayView;
 
@@ -41,6 +43,10 @@ public partial class MediaElementPage : BasePage
         {
             OverlayImage = PlatformImage.FromStream(stream);
         }
+        BindingContext = this;
+
+        var drawable = new GraphicsDrawable(OverlayImage, Calculator.sunriseTable!);
+        SavedImage = CanvasExtensions.SaveCanvasToImage(drawable, 112, 43);
 
         BuildGrid();
 
@@ -48,7 +54,6 @@ public partial class MediaElementPage : BasePage
 
         OverlayView!.IsVisible = false;
 
-        BindingContext = this;
     }
 
     private void MediaElementPage_PositionChanged(object? sender, EventArgs e)
@@ -100,7 +105,20 @@ public abstract class BasePage() : ContentPage
     //}
 
 }
+public static class CanvasExtensions
+{
+    public static IImage SaveCanvasToImage(IDrawable drawable, float width, float height)
+    {
+        var bitmapExportContext = new PlatformBitmapExportContext((int)width, (int)height, 1.0f);
+        var canvas = bitmapExportContext.Canvas;
 
+        // Draw on the canvas
+        drawable.Draw(canvas, new RectF(0, 0, width, height));
+
+        // Export the bitmap to an IImage object
+        return bitmapExportContext.Image;
+    }
+}
 public partial class BaseViewModel : ObservableObject
 {
 }
@@ -111,4 +129,5 @@ public static partial class MyExtensions
     {
         return source >= start && source <= end;
     }
+
 }
