@@ -46,7 +46,7 @@ public partial class MediaElementPage : BasePage
         BindingContext = this;
 
         var drawable = new GraphicsDrawable(OverlayImage, Calculator.sunriseTable!);
-        SavedImage = CanvasExtensions.SaveCanvasToImage(drawable, 112, 43);
+        SavedImage = CanvasExtensions.SaveCanvasToImage(drawable, 2*112, 2*43);
 
         BuildGrid();
 

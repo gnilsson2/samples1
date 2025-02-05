@@ -119,7 +119,7 @@ public partial class MediaElementPage : BasePage
             canvas.DrawImage(_image, 0, 0, dirtyRect.Width, dirtyRect.Height);
 
             // Draw the text
-            canvas.FontSize = 7;
+            canvas.FontSize = 12;
             canvas.FontColor = Colors.Red;
             canvas.DrawString(_text, 0, 0, dirtyRect.Width, dirtyRect.Height, HorizontalAlignment.Left, VerticalAlignment.Top);
         }
