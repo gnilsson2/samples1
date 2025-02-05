@@ -39,10 +39,12 @@
     <MauiImage Include="Resources\Images\*" />
     <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+    <MauiImage Remove="Resources\Images\frame_264_ROI.png" />
     <MauiImage Remove="Resources\Images\overlay_image.png" />
     <None Remove="compare.png" />
     <None Remove="diagram.vi" />
     <None Remove="Untitled 1.ods" />
+    <EmbeddedResource Include="Resources\Images\frame_264_ROI.png" />
     <EmbeddedResource Include="Resources\Images\overlay_image.png" />
     <!-- Custom Fonts -->
     <PackageReference Include="CommunityToolkit.Maui" />

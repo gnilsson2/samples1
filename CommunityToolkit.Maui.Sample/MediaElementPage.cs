@@ -39,14 +39,14 @@ public partial class MediaElementPage : BasePage
         };
 
         Assembly assembly = GetType().GetTypeInfo().Assembly;
-        using (Stream stream = assembly!.GetManifestResourceStream("CommunityToolkit.Maui.Sample.Resources.Images.overlay_image.png")!)
+        using (Stream stream = assembly!.GetManifestResourceStream("CommunityToolkit.Maui.Sample.Resources.Images.frame_264_ROI.png")!)
         {
             OverlayImage = PlatformImage.FromStream(stream);
         }
         BindingContext = this;
 
-        var drawable = new GraphicsDrawable(OverlayImage, Calculator.sunriseTable!);
-        SavedImage = CanvasExtensions.SaveCanvasToImage(drawable, 2*112, 2*43);
+        GraphicsDrawable drawable = new GraphicsDrawable(OverlayImage, Calculator.sunriseTable!);
+        SavedImage = CanvasExtensions.SaveCanvasToImage(drawable, 852, 227);
 
         BuildGrid();
 

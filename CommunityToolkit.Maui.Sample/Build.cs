@@ -128,9 +128,13 @@ public partial class MediaElementPage : BasePage
     {
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
-            const float factorX = 0.357f;
-            const float factorW = 0.504f;
-            canvas.DrawImage(SavedImage, dirtyRect.Width*factorX, 100, dirtyRect.Width*factorW, 48);
+            //Width=411,4286, Height=150,0952 Portait
+            //Width=914,2857, Height=150,0952 Landscape
+            //const float factorX = 0.357f;
+            //const float factorW = 0.504f;
+            float y1 = 230.0f/480*dirtyRect.Bottom;
+            //canvas.DrawImage(SavedImage, dirtyRect.Width*factorX, 100, dirtyRect.Width*factorW, 48);
+            canvas.DrawImage(SavedImage, 0, y1, dirtyRect.Width, dirtyRect.Bottom);
         }
     }
     private void AddRise(Grid grid)
