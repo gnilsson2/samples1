@@ -185,11 +185,16 @@ namespace PaulSchlyter
         static readonly Place[] places =
         [
             new Place { Name = "Lund", Coordinate = new Coordinate(55.708333, 13.199167) },
-            new Place { Name = "Stockholm", Coordinate = new Coordinate(59.329444, 18.068611) },
+            new Place { Name = "Sthlm", Coordinate = new Coordinate(59.329444, 18.068611) },
             new Place { Name = "Lycksele", Coordinate = new Coordinate(64.596389, 18.675278) },
             new Place { Name = "Kiruna", Coordinate = new Coordinate(67.848889, 20.302778) }
         ];
-
+        static readonly string[] rowlabels = 
+        {
+            "Idag        ", 
+            "Förra veckan", 
+            "Tidsskillnad"
+        };
         public static string? sunriseTable;
         public static string? sunsetTable;
 
@@ -223,13 +228,24 @@ namespace PaulSchlyter
                 }
             }
 
-            sunriseTable = "";
+            //Column headers
+            sunriseTable = "\n";
+            sunriseTable += "            ";
+            for (int p = 0; p < places.Length; p++)
+            {
+                sunriseTable += (places[p].Name);
+                sunriseTable += "    ";
+            }
+            sunriseTable += "\n";
+
             for (int j = 0; j < 3; j++)
             {
+                sunriseTable += "\n";
+                sunriseTable += rowlabels[j];
                 for (int p = 0; p < places.Length; p++)
                 {
                     sunriseTable += (objects[0, j, p]);
-                    sunriseTable += "    ";
+                    //sunriseTable += "    ";
                 }
                 sunriseTable += "\n";
             }
