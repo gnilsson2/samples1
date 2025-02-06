@@ -29,12 +29,12 @@ public partial class MediaElementPage : BasePage
             // Draw the text
             // x 130 y 286 of 852 x 480
             const float videoXfraction = 130.0f/852;
-            float x1 = videoXfraction*dirtyRect.Width;
+            float x1 = videoXfraction*dirtyRect.Width; // x1 seems ok!
 
             canvas.Font = new Font("monospace");
             canvas.FontSize = 24;
             canvas.FontColor = Colors.White;
-            canvas.DrawString(_text, x1, 0, dirtyRect.Width-x1, dirtyRect.Height, HorizontalAlignment.Left, VerticalAlignment.Top); // X1 seems ok!
+            canvas.DrawString(_text, x1, 0, dirtyRect.Width - x1, dirtyRect.Height, HorizontalAlignment.Left, VerticalAlignment.Top); 
         }
     }
 
