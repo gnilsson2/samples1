@@ -11,6 +11,30 @@ public partial class MediaElementPage : BasePage
 {
     private static IImage? OverlayImage;
     private static IImage? SavedImage;
+    public class GraphicsDrawable : IDrawable
+    {
+        private readonly IImage _image;
+        private readonly string _text;
+
+        public GraphicsDrawable(IImage image, string text)
+        {
+            _image = image;
+            _text = text;
+        }
+
+        public void Draw(ICanvas canvas, RectF dirtyRect)
+        {
+            // Draw the image
+            canvas.DrawImage(_image, 0, 0, dirtyRect.Width, dirtyRect.Height);
+            canvas.StrokeColor = Colors.Red;
+            canvas.DrawRectangle(0, 0, dirtyRect.Width, dirtyRect.Height);
+
+            // Draw the text
+            canvas.FontSize = 12;
+            canvas.FontColor = Colors.Red;
+            canvas.DrawString(_text, 0, 0, dirtyRect.Width, dirtyRect.Height, HorizontalAlignment.Left, VerticalAlignment.Top);
+        }
+    }
 
     private void LoadOverlays()
     {

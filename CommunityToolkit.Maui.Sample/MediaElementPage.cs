@@ -23,7 +23,7 @@ public partial class MediaElementPage : BasePage
 
         MediaElement = new MediaElement
         {
-            ShouldAutoPlay = true,
+            ShouldAutoPlay = false,
             Source = MediaSource.FromResource("kort1.mp4")
         };
 
@@ -35,8 +35,9 @@ public partial class MediaElementPage : BasePage
 
         MediaElement!.PositionChanged += MediaElementPage_PositionChanged;
 
-        OverlayView!.IsVisible = false;
+        //OverlayView!.IsVisible = false;
 
+        MediaElement.Play();
     }
 
 
