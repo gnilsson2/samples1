@@ -17,6 +17,8 @@ namespace CommunityToolkit.Maui.Sample;
 public partial class MediaElementPage : BasePage
 {
     //TODO: kort2.mp4 with hardcoded positions
+    private static Label? TheTextVertical;
+    GraphicsView? OverlayView;
 
     private void BuildGrid()
     {

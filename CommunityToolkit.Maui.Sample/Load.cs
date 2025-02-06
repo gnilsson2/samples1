@@ -8,6 +8,8 @@ namespace CommunityToolkit.Maui.Sample;
 
 public partial class MediaElementPage : BasePage
 {
+    private static IImage? OverlayImage;
+    private static IImage? SavedImage;
 
     private void LoadOverlays()
     {

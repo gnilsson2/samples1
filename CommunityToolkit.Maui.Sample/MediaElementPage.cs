@@ -6,17 +6,11 @@ using Microsoft.Maui.Devices;
 using PaulSchlyter;
 using System;
 
-using IImage = Microsoft.Maui.Graphics.IImage;
-
 namespace CommunityToolkit.Maui.Sample;
 
 public partial class MediaElementPage : BasePage
 {
     private readonly MediaElement MediaElement;
-    private static IImage? OverlayImage;
-    private static IImage? SavedImage;
-    private static Label? TheTextVertical;
-    GraphicsView? OverlayView;
 
     Label infolabel = new();
 
