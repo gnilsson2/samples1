@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Application = Microsoft.Maui.Controls.Application;
 
@@ -10,6 +11,7 @@ public partial class App : Application
 
     public App(MediaElementPage appShell)
     {
+
         InitializeComponent();
 
         this.appShell = appShell;

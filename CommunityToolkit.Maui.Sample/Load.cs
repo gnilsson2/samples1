@@ -3,6 +3,7 @@ using PaulSchlyter;
 using System.Reflection;
 using System.IO;
 using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Devices;
 
 namespace CommunityToolkit.Maui.Sample;
 
@@ -20,29 +21,19 @@ public partial class MediaElementPage : BasePage
         }
         GraphicsDrawable drawable = new GraphicsDrawable(OverlayImage!, Calculator.sunriseTable!);
 
-        const int OverlayWidth = 852;
-        const int OverlayHeight = 227;
+        const int OverlayWidthPixels = 852;
+        const int OverlayHeightPixels = 227;
 
-        var bitmapExportContext = new PlatformBitmapExportContext(OverlayWidth, OverlayHeight, 1.0f);
+        var bitmapExportContext = new PlatformBitmapExportContext(OverlayWidthPixels, OverlayHeightPixels, 1.0f);
+        //var bitmapExportContext = new PlatformBitmapExportContext((int)(OverlayWidthPixels/DeviceDisplay.Current.MainDisplayInfo.Density), (int)(OverlayHeightPixels / DeviceDisplay.Current.MainDisplayInfo.Density), 1.0f);
         var canvas = bitmapExportContext.Canvas;
 
         // Draw on the canvas
-        drawable.Draw(canvas, new RectF(0, 0, OverlayWidth, OverlayHeight));
+        drawable.Draw(canvas, new RectF(0, 0, OverlayWidthPixels, OverlayHeightPixels));
+        //drawable.Draw(canvas, new RectF(0, 0, (float)(OverlayWidthPixels/DeviceDisplay.Current.MainDisplayInfo.Density), (float)(OverlayHeightPixels / DeviceDisplay.Current.MainDisplayInfo.Density)));
 
         // Export the bitmap to an IImage object
         SavedImage = bitmapExportContext.Image;
 
-    }
-
-    public static IImage SaveCanvasToImage(IDrawable drawable, float width, float height)
-    {
-        var bitmapExportContext = new PlatformBitmapExportContext((int)width, (int)height, 1.0f);
-        var canvas = bitmapExportContext.Canvas;
-
-        // Draw on the canvas
-        drawable.Draw(canvas, new RectF(0, 0, width, height));
-
-        // Export the bitmap to an IImage object
-        return bitmapExportContext.Image;
     }
 }

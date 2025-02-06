@@ -118,6 +118,8 @@ public partial class MediaElementPage : BasePage
         {
             // Draw the image
             canvas.DrawImage(_image, 0, 0, dirtyRect.Width, dirtyRect.Height);
+            canvas.StrokeColor = Colors.Red;
+            canvas.DrawRectangle(0, 0, dirtyRect.Width, dirtyRect.Height);
 
             // Draw the text
             canvas.FontSize = 12;
@@ -129,14 +131,9 @@ public partial class MediaElementPage : BasePage
     {
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
-            //Width=411,4286, Height=150,0952 Portait
-            //Width=914,2857, Height=150,0952 Landscape
-            //const float factorX = 0.357f;
-            //const float factorW = 0.504f;
-            const float videoYfraction = 230.0f/480;
+            const float videoYfraction = 248.0f/480;
             float y1 = videoYfraction*dirtyRect.Bottom;
-            //canvas.DrawImage(SavedImage, dirtyRect.Width*factorX, 100, dirtyRect.Width*factorW, 48);
-            canvas.DrawImage(SavedImage, 0, y1, dirtyRect.Width, dirtyRect.Bottom);
+            canvas.DrawImage(SavedImage, 0, y1, dirtyRect.Width, dirtyRect.Bottom-y1);  // !! OK !! //Drawing image at position (0, 77,54921) with width 411,4286 and height 150,0952
         }
     }
     private void AddRise(Grid grid)

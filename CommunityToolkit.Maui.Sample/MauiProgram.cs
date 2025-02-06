@@ -29,7 +29,6 @@ public static class MauiProgram
 
             .UseMauiApp<App>();
 
-
         builder.Services.AddSingleton<MediaElementPage>();
 
         Routing.RegisterRoute("//ViewsGalleryPage/MediaElementPage", typeof(NavigableElement));
@@ -38,7 +37,8 @@ public static class MauiProgram
         builder.Services.AddSingleton(DeviceDisplay.Current);
 
 #if DEBUG
-        builder.Logging.AddDebug().SetMinimumLevel(LogLevel.Trace);
+        //builder.Logging.AddDebug().SetMinimumLevel(LogLevel.Trace);
+        //builder.Logging.SetMinimumLevel(LogLevel.Error);
 #endif
 
         return builder.Build();
