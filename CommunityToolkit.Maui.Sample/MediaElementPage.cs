@@ -50,7 +50,7 @@ public partial class MediaElementPage : BasePage
     {
         System.Text.StringBuilder sb = new();
 
-        sb.Append($"Pixel width: {DeviceDisplay.Current.MainDisplayInfo.Width} / Pixel Height: {DeviceDisplay.Current.MainDisplayInfo.Height}");
+        sb.Append($"Pixel width: {DeviceDisplay.Current.MainDisplayInfo.Width} / height: {DeviceDisplay.Current.MainDisplayInfo.Height}");
         sb.AppendLine($"  Density: {DeviceDisplay.Current.MainDisplayInfo.Density}");
 
 
