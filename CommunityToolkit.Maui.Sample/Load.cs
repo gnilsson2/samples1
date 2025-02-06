@@ -10,21 +10,12 @@ public partial class MediaElementPage : BasePage
 {
     private static IImage? OverlayImage;
     private static IImage? SavedImage;
-    public class GraphicsDrawable : IDrawable
+    public class GraphicsDrawable(IImage image, string text) : IDrawable
     {
-        private readonly IImage _image;
-        private readonly string _text;
-
-        public GraphicsDrawable(IImage image, string text)
-        {
-            _image = image;
-            _text = text;
-        }
-
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
             // Draw the image
-            canvas.DrawImage(_image, 0, 0, dirtyRect.Width, dirtyRect.Height);
+            canvas.DrawImage(image, 0, 0, dirtyRect.Width, dirtyRect.Height);
 
             // Draw the text
             // x 130 y 286 of 852 x 480
@@ -34,7 +25,7 @@ public partial class MediaElementPage : BasePage
             canvas.Font = new Font("monospace");
             canvas.FontSize = 24;
             canvas.FontColor = Colors.White;
-            canvas.DrawString(_text, x1, 0, dirtyRect.Width - x1, dirtyRect.Height, HorizontalAlignment.Left, VerticalAlignment.Top); 
+            canvas.DrawString(text, x1, 0, dirtyRect.Width - x1, dirtyRect.Height, HorizontalAlignment.Left, VerticalAlignment.Top); 
         }
     }
 
@@ -45,18 +36,16 @@ public partial class MediaElementPage : BasePage
         {
             OverlayImage = PlatformImage.FromStream(stream);
         }
-        GraphicsDrawable drawable = new GraphicsDrawable(OverlayImage!, Calculator.sunriseTable!);
+        GraphicsDrawable drawable = new(OverlayImage!, Calculator.sunriseTable!);
 
         const int OverlayWidthPixels = 852;
         const int OverlayHeightPixels = 227;
 
         var bitmapExportContext = new PlatformBitmapExportContext(OverlayWidthPixels, OverlayHeightPixels, 1.0f);
-        //var bitmapExportContext = new PlatformBitmapExportContext((int)(OverlayWidthPixels/DeviceDisplay.Current.MainDisplayInfo.Density), (int)(OverlayHeightPixels / DeviceDisplay.Current.MainDisplayInfo.Density), 1.0f);
         var canvas = bitmapExportContext.Canvas;
 
         // Draw on the canvas
         drawable.Draw(canvas, new RectF(0, 0, OverlayWidthPixels, OverlayHeightPixels));
-        //drawable.Draw(canvas, new RectF(0, 0, (float)(OverlayWidthPixels/DeviceDisplay.Current.MainDisplayInfo.Density), (float)(OverlayHeightPixels / DeviceDisplay.Current.MainDisplayInfo.Density)));
 
         // Export the bitmap to an IImage object
         SavedImage = bitmapExportContext.Image;

@@ -190,11 +190,11 @@ namespace PaulSchlyter
             new Place { Name = "Kiruna"  , Coordinate = new Coordinate(67.848889, 20.302778) }
         ];
         static readonly string[] rowlabels = 
-        {
+        [
             "Idag        ", 
             "Förra veckan", 
             "Tidsskillnad"
-        };
+        ];
         public static string? sunriseTable;
         public static string? sunsetTable;
 
