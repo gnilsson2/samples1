@@ -5,16 +5,15 @@
 using CommunityToolkit.Maui.Views;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Devices;
 using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Graphics.Platform;
 using Microsoft.Maui.Layouts;
 using PaulSchlyter;
-using System;
 using IImage = Microsoft.Maui.Graphics.IImage;
 using Image = Microsoft.Maui.Controls.Image;
 using Label = Microsoft.Maui.Controls.Label;
+
 namespace CommunityToolkit.Maui.Sample;
+
 public partial class MediaElementPage : BasePage
 {
     //TODO: kort2.mp4 with hardcoded positions
@@ -132,7 +131,8 @@ public partial class MediaElementPage : BasePage
             //Width=914,2857, Height=150,0952 Landscape
             //const float factorX = 0.357f;
             //const float factorW = 0.504f;
-            float y1 = 230.0f/480*dirtyRect.Bottom;
+            const float videoYfraction = 230.0f/480;
+            float y1 = videoYfraction*dirtyRect.Bottom;
             //canvas.DrawImage(SavedImage, dirtyRect.Width*factorX, 100, dirtyRect.Width*factorW, 48);
             canvas.DrawImage(SavedImage, 0, y1, dirtyRect.Width, dirtyRect.Bottom);
         }
@@ -140,15 +140,15 @@ public partial class MediaElementPage : BasePage
     private void AddRise(Grid grid)
     {
         OverlayView = new();
-        OverlayView.Drawable = new GraphicsDrawable2();
-        //OverlayView.AnchorX = 0;
-        //OverlayView.AnchorY = 0;
+        OverlayView.AnchorX = 0;
+        OverlayView.AnchorY = 0;
+        OverlayView.TranslationX = 0;
+        OverlayView.TranslationY = 0;
         //OverlayView.WidthRequest = 200; // remove
         //OverlayView.HeightRequest = 48;
-        //OverlayView.TranslationX = -30; // 145;
-        //OverlayView.TranslationY = 51;
         //OverlayView.ScaleX = 3.1;       // 1.4;
         //OverlayView.ScaleY = 1;
+        OverlayView.Drawable = new GraphicsDrawable2();
         grid.Add(OverlayView);
     }
 

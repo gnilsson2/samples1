@@ -3,13 +3,9 @@ using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Devices;
-using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Graphics.Platform;
 using PaulSchlyter;
 using System;
-using System.IO;
-using System.Reflection;
-using static System.Net.Mime.MediaTypeNames;
+
 using IImage = Microsoft.Maui.Graphics.IImage;
 
 namespace CommunityToolkit.Maui.Sample;
@@ -27,7 +23,6 @@ public partial class MediaElementPage : BasePage
     public MediaElementPage(BaseViewModel viewModel)
     {
         BindingContext = viewModel;
-        //Padding = 12;
 
         //var today = new DateTime(2024, 1, 9);
         Calculator.Calculate(DateTime.Now);
@@ -38,15 +33,9 @@ public partial class MediaElementPage : BasePage
             Source = MediaSource.FromResource("kort1.mp4")
         };
 
-        Assembly assembly = GetType().GetTypeInfo().Assembly;
-        using (Stream stream = assembly!.GetManifestResourceStream("CommunityToolkit.Maui.Sample.Resources.Images.frame_264_ROI.png")!)
-        {
-            OverlayImage = PlatformImage.FromStream(stream);
-        }
         BindingContext = this;
 
-        GraphicsDrawable drawable = new GraphicsDrawable(OverlayImage, Calculator.sunriseTable!);
-        SavedImage = CanvasExtensions.SaveCanvasToImage(drawable, 852, 227);
+        LoadOverlays();
 
         BuildGrid();
 
@@ -56,12 +45,12 @@ public partial class MediaElementPage : BasePage
 
     }
 
+
     private void MediaElementPage_PositionChanged(object? sender, EventArgs e)
     {
         //graphicsView!.IsVisible = MediaElement.Position.Between(TimeSpan.FromMilliseconds(9500), TimeSpan.FromMilliseconds(30000));
     }
 
-    //TODO: solfilmen0_utkast.mp4, timing.
     private string ReadDeviceDisplay()
     {
         System.Text.StringBuilder sb = new();
@@ -91,34 +80,18 @@ public partial class MediaElementPage : BasePage
         MediaElement.Stop();
         MediaElement.Handler?.DisconnectHandler();
     }
-
 }
 
 public abstract class BasePage() : ContentPage
 {
-
     //protected override void OnAppearing()
     //{
     //    base.OnAppearing();
 
     //    Debug.WriteLine($"OnAppearing: {Title}");
     //}
-
 }
-public static class CanvasExtensions
-{
-    public static IImage SaveCanvasToImage(IDrawable drawable, float width, float height)
-    {
-        var bitmapExportContext = new PlatformBitmapExportContext((int)width, (int)height, 1.0f);
-        var canvas = bitmapExportContext.Canvas;
 
-        // Draw on the canvas
-        drawable.Draw(canvas, new RectF(0, 0, width, height));
-
-        // Export the bitmap to an IImage object
-        return bitmapExportContext.Image;
-    }
-}
 public partial class BaseViewModel : ObservableObject
 {
 }
@@ -129,5 +102,4 @@ public static partial class MyExtensions
     {
         return source >= start && source <= end;
     }
-
 }
