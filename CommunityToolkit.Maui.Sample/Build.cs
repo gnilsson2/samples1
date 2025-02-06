@@ -293,7 +293,8 @@ public partial class MediaElementPage : BasePage
     {
         var buttonGrid = new Grid
         {
-            Padding = new Thickness(5, 10, 5, 10),
+            Padding = new Thickness(0, 0, 0, 0),
+            Margin = new Thickness(0, 0, 0, 0),
             ColumnDefinitions =
                 {
                     new ColumnDefinition(),
@@ -301,7 +302,8 @@ public partial class MediaElementPage : BasePage
                     new ColumnDefinition(),
                     new ColumnDefinition(),
                 },
-            ColumnSpacing = 5
+            ColumnSpacing = 20,
+            Scale = 0.7
         };
         Button b0 = new() { Text = "Play", Command = new Command(OnPlayClicked) };
         buttonGrid.Children.Add(b0);
@@ -334,7 +336,9 @@ public partial class MediaElementPage : BasePage
         durationLabel.SetBinding(Label.TextProperty, new Binding("Duration", source: MediaElement));
         var infoGrid = new Grid
         {
-            HorizontalOptions = LayoutOptions.Fill
+            HorizontalOptions = LayoutOptions.Fill,
+            Padding = new Thickness(0, 0, 0, 0),
+            Margin = new Thickness(0, 0, 0, 0),
         };
         infoGrid.Children.Add(positionLabel);
         infoGrid.Children.Add(durationLabel);
@@ -346,7 +350,7 @@ public partial class MediaElementPage : BasePage
     {
         var horizontalStackLayout = new HorizontalStackLayout
         {
-            Padding = new Thickness(0, 0, 0, 15),
+            Padding = new Thickness(0, 0, 0, 0),
             HorizontalOptions = LayoutOptions.Center
         };
         var label = new Label

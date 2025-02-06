@@ -26,9 +26,6 @@ public partial class MediaElementPage : BasePage
             // Draw the image
             canvas.DrawImage(_image, 0, 0, dirtyRect.Width, dirtyRect.Height);
 
-            canvas.StrokeColor = Colors.Red; //TODO remove
-            canvas.DrawRectangle(0, 0, dirtyRect.Width, dirtyRect.Height); //TODO remove
-
             // Draw the text
             // x 130 y 286 of 852 x 480
             const float videoXfraction = 130.0f/852;

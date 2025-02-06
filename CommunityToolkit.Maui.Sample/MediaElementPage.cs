@@ -52,8 +52,8 @@ public partial class MediaElementPage : BasePage
 
         sb.Append($"Pixel width: {DeviceDisplay.Current.MainDisplayInfo.Width} / Pixel Height: {DeviceDisplay.Current.MainDisplayInfo.Height}");
         sb.AppendLine($"  Density: {DeviceDisplay.Current.MainDisplayInfo.Density}");
-        sb.AppendLine($"Orientation: {DeviceDisplay.Current.MainDisplayInfo.Orientation}");
-        sb.AppendLine($"MediaElement Width: {MediaElement.Width:f1} Height: {MediaElement.Height:f1}");
+        //sb.AppendLine($"Orientation: {DeviceDisplay.Current.MainDisplayInfo.Orientation}");
+        //sb.AppendLine($"MediaElement Width: {MediaElement.Width:f1} Height: {MediaElement.Height:f1}");
 
         return sb.ToString();
     }
