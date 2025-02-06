@@ -167,7 +167,7 @@ namespace PaulSchlyter
         {
             var fmt = (result < TimeSpan.Zero ? "\\-" : "\\+") + "h\\:mm";
             var diff = result.ToString(fmt);
-            return diff + "   ";
+            return " " + diff + "   ";
         }
         private const string NAtime = "    -    ";
 
@@ -184,10 +184,10 @@ namespace PaulSchlyter
 
         static readonly Place[] places =
         [
-            new Place { Name = "Lund", Coordinate = new Coordinate(55.708333, 13.199167) },
-            new Place { Name = "Sthlm", Coordinate = new Coordinate(59.329444, 18.068611) },
+            new Place { Name = "Lund"    , Coordinate = new Coordinate(55.708333, 13.199167) },
+            new Place { Name = "Sthlm"   , Coordinate = new Coordinate(59.329444, 18.068611) },
             new Place { Name = "Lycksele", Coordinate = new Coordinate(64.596389, 18.675278) },
-            new Place { Name = "Kiruna", Coordinate = new Coordinate(67.848889, 20.302778) }
+            new Place { Name = "Kiruna"  , Coordinate = new Coordinate(67.848889, 20.302778) }
         ];
         static readonly string[] rowlabels = 
         {
@@ -230,7 +230,7 @@ namespace PaulSchlyter
 
             //Column headers
             sunriseTable = "\n";
-            sunriseTable += "            ";
+            sunriseTable += "               ";
             for (int p = 0; p < places.Length; p++)
             {
                 sunriseTable += (places[p].Name);
@@ -244,7 +244,7 @@ namespace PaulSchlyter
                 sunriseTable += rowlabels[j];
                 for (int p = 0; p < places.Length; p++)
                 {
-                    sunriseTable += (objects[0, j, p]);
+                    sunriseTable += " "+(objects[0, j, p]);
                     //sunriseTable += "    ";
                 }
                 sunriseTable += "\n";

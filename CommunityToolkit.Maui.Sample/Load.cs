@@ -3,7 +3,6 @@ using PaulSchlyter;
 using System.Reflection;
 using System.IO;
 using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Devices;
 
 namespace CommunityToolkit.Maui.Sample;
 
