@@ -24,7 +24,7 @@ public partial class MediaElementPage : BasePage
         MediaElement = new MediaElement
         {
             ShouldAutoPlay = false,
-            Source = MediaSource.FromResource("kort1.mp4")
+            Source = MediaSource.FromResource("solfilmen0_utkast.mp4")
         };
 
         BindingContext = this;
@@ -35,15 +35,17 @@ public partial class MediaElementPage : BasePage
 
         MediaElement!.PositionChanged += MediaElementPage_PositionChanged;
 
-        //OverlayView!.IsVisible = false;
+        OverlayViewRise!.IsVisible = false;
 
+        MediaElement.Play(); // try to make work on Emulators, didnt work!
+        MediaElement.Stop();
         MediaElement.Play();
     }
 
 
     private void MediaElementPage_PositionChanged(object? sender, EventArgs e)
     {
-        //graphicsView!.IsVisible = MediaElement.Position.Between(TimeSpan.FromMilliseconds(9500), TimeSpan.FromMilliseconds(30000));
+        OverlayViewRise!.IsVisible = MediaElement.Position.Between(8.9, 30.1);
     }
 
     private string ReadDeviceDisplay()
@@ -53,13 +55,12 @@ public partial class MediaElementPage : BasePage
         sb.Append($"Pixel width: {DeviceDisplay.Current.MainDisplayInfo.Width} / height: {DeviceDisplay.Current.MainDisplayInfo.Height}");
         sb.AppendLine($"  Density: {DeviceDisplay.Current.MainDisplayInfo.Density}");
 
-
         return sb.ToString();
     }
 
     private void OnHeppClicked(object obj)
     {
-        OverlayView!.IsVisible = !OverlayView!.IsVisible;
+        OverlayViewRise!.IsVisible = !OverlayViewRise!.IsVisible;
         infolabel.Text = ReadDeviceDisplay();
     }
 
@@ -82,8 +83,10 @@ public partial class BaseViewModel : ObservableObject { }
 
 public static partial class MyExtensions
 {
-    public static bool Between(this TimeSpan source, TimeSpan start, TimeSpan end)
+    public static bool Between(this TimeSpan source, double start, double end)
     {
-        return source >= start && source <= end;
+        if (source.TotalMilliseconds < start*1000) return false;
+        if (source.TotalMilliseconds > end*1000) return false;
+        return true;
     }
 }

@@ -9,12 +9,9 @@ namespace CommunityToolkit.Maui.Sample;
 public partial class MediaElementPage : BasePage
 {
 
-    GraphicsView? OverlayView;
-
     private void BuildGrid()
     {
-        Grid Thegrid;
-        Thegrid = new Grid
+        Grid grid = new()
         {
             RowDefinitions =
                 {
@@ -26,18 +23,13 @@ public partial class MediaElementPage : BasePage
                 }
         };
 
-        Grid x = AddFilmen();
-        Thegrid.AddAtRow(0, x);
+        grid.AddAtRow(0, AddFilmen());
+        grid.AddAtRow(1, AddState());
+        grid.AddAtRow(2, AddButtons());
+        grid.AddAtRow(3, AddPosition());
+        grid.AddAtRow(4, AddInfo());
 
-        Thegrid.AddAtRow(1, AddState());
-
-        Thegrid.AddAtRow(2, AddButtons());
-
-        Thegrid.AddAtRow(3, AddPosition());
-
-        Thegrid.AddAtRow(4, AddInfo());
-
-        Content = Thegrid;
+        Content = grid;
     }
     private Grid AddFilmen()
     {
@@ -53,38 +45,14 @@ public partial class MediaElementPage : BasePage
         MediaElement.TranslationY = 0;
 
         grid.Add(MediaElement);
-
-        AddRise(grid);
+        grid.Add(OverlayViewRise);
 
         return grid;
     }
 
-    public class GraphicsDrawable2 : IDrawable
-    {
-        public void Draw(ICanvas canvas, RectF dirtyRect)
-        {
-            const float videoYfraction = 248.0f/480;
-            float y1 = videoYfraction*dirtyRect.Bottom;
-            canvas.DrawImage(SavedImage, 0, y1, dirtyRect.Width, dirtyRect.Bottom-y1);  // !! OK !! //Drawing image at position (0, 77,54921) with width 411,4286 and height 150,0952
-        }
-    }
-    private void AddRise(Grid grid)
-    {
-        OverlayView = new()
-        {
-            AnchorX = 0,
-            AnchorY = 0,
-            TranslationX = 0,
-            TranslationY = 0,
-            Drawable = new GraphicsDrawable2()
-        };
-        grid.Add(OverlayView);
-    }
-
-
     private VerticalStackLayout AddInfo()
     {
-        var layout = new VerticalStackLayout
+        VerticalStackLayout layout = new()
         {
             Padding = new Thickness(0, 0, 0, 15),
         };
@@ -98,7 +66,7 @@ public partial class MediaElementPage : BasePage
     }
     private Grid AddButtons()
     {
-        var buttonGrid = new Grid
+        Grid buttonGrid = new()
         {
             Padding = new Thickness(0, 0, 0, 0),
             Margin = new Thickness(0, 0, 0, 0),
@@ -130,18 +98,20 @@ public partial class MediaElementPage : BasePage
 
     private Grid AddPosition()
     {
-        var positionLabel = new Label
+        Label positionLabel = new()
         {
             HorizontalOptions = LayoutOptions.Start
         };
         positionLabel.SetBinding(Label.TextProperty, new Binding("Position", source: MediaElement));
-        var durationLabel = new Label
+
+        Label durationLabel = new()
         {
             HorizontalOptions = LayoutOptions.End,
             HorizontalTextAlignment = TextAlignment.End
         };
         durationLabel.SetBinding(Label.TextProperty, new Binding("Duration", source: MediaElement));
-        var infoGrid = new Grid
+        
+        Grid infoGrid = new()
         {
             HorizontalOptions = LayoutOptions.Fill,
             Padding = new Thickness(0, 0, 0, 0),
@@ -155,16 +125,16 @@ public partial class MediaElementPage : BasePage
 
     private HorizontalStackLayout AddState()
     {
-        var horizontalStackLayout = new HorizontalStackLayout
+        HorizontalStackLayout horizontalStackLayout = new()
         {
             Padding = new Thickness(0, 0, 0, 0),
             HorizontalOptions = LayoutOptions.Center
         };
-        var label = new Label
+        Label label = new()
         {
             HorizontalOptions = LayoutOptions.Center
         };
-        var multiBinding = new MultiBinding { StringFormat = "Current State: {0} - Dimensions: {1}x{2}" };
+        MultiBinding multiBinding = new() { StringFormat = "Current State: {0} - Dimensions: {1}x{2}" };
         multiBinding.Bindings.Add(new Binding("CurrentState", source: MediaElement));
         multiBinding.Bindings.Add(new Binding("MediaWidth", source: MediaElement));
         multiBinding.Bindings.Add(new Binding("MediaHeight", source: MediaElement));
@@ -177,14 +147,9 @@ public partial class MediaElementPage : BasePage
 
 public static partial class MyExtensions
 {
-    public static void AddAtRow(this Grid Thegrid, int row, Layout buttonGrid)
+    public static void AddAtRow(this Grid grid, int row, Layout layout)
     {
-        Thegrid.Children.Add(buttonGrid);
-        Thegrid.SetRow(buttonGrid, row);
-    }
-    public static void AddAtRow(this Grid Thegrid, int row, HorizontalStackLayout buttonGrid)
-    {
-        Thegrid.Children.Add(buttonGrid);
-        Thegrid.SetRow(buttonGrid, row);
+        grid.Children.Add(layout);
+        grid.SetRow(layout, row);
     }
 }

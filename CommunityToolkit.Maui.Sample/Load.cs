@@ -3,11 +3,15 @@ using PaulSchlyter;
 using System.Reflection;
 using System.IO;
 using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Controls;
 
 namespace CommunityToolkit.Maui.Sample;
 
 public partial class MediaElementPage : BasePage
 {
+    GraphicsView? OverlayViewRise;
+
+
     private static IImage? OverlayImage;
     private static IImage? SavedImage;
     public class GraphicsDrawable(IImage image, string text) : IDrawable
@@ -36,7 +40,15 @@ public partial class MediaElementPage : BasePage
             }
         }
     }
-
+    public class GraphicsDrawable2 : IDrawable
+    {
+        public void Draw(ICanvas canvas, RectF dirtyRect)
+        {
+            const float videoYfraction = 248.0f/480;
+            float y1 = videoYfraction*dirtyRect.Bottom;
+            canvas.DrawImage(SavedImage, 0, y1, dirtyRect.Width, dirtyRect.Bottom-y1);  // !! OK !! //Drawing image at position (0, 77,54921) with width 411,4286 and height 150,0952
+        }
+    }
     private void LoadOverlays()
     {
         Assembly assembly = GetType().GetTypeInfo().Assembly;
@@ -49,8 +61,8 @@ public partial class MediaElementPage : BasePage
         const int OverlayWidthPixels = 852;
         const int OverlayHeightPixels = 227;
 
-        var bitmapExportContext = new PlatformBitmapExportContext(OverlayWidthPixels, OverlayHeightPixels, 1.0f);
-        var canvas = bitmapExportContext.Canvas;
+        PlatformBitmapExportContext bitmapExportContext = new(OverlayWidthPixels, OverlayHeightPixels, 1.0f);
+        ICanvas canvas = bitmapExportContext.Canvas;
 
         // Draw on the canvas
         drawable.Draw(canvas, new RectF(0, 0, OverlayWidthPixels, OverlayHeightPixels));
@@ -58,5 +70,13 @@ public partial class MediaElementPage : BasePage
         // Export the bitmap to an IImage object
         SavedImage = bitmapExportContext.Image;
 
+        OverlayViewRise = new()
+        {
+            AnchorX = 0,
+            AnchorY = 0,
+            TranslationX = 0,
+            TranslationY = 0,
+            Drawable = new GraphicsDrawable2()
+        };
     }
 }
