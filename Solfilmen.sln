@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31521.260
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityToolkit.Maui.Sample", "CommunityToolkit.Maui.Sample\CommunityToolkit.Maui.Sample.csproj", "{3A795407-604F-4502-8C76-281BE5575A84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Solfilmen", "CommunityToolkit.Maui.Sample\Solfilmen.csproj", "{3A795407-604F-4502-8C76-281BE5575A84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
