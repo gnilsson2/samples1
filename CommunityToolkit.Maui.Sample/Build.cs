@@ -46,6 +46,7 @@ public partial class MediaElementPage : BasePage
 
         grid.Add(MediaElement);
         grid.Add(OverlayViewRise);
+        grid.Add(OverlayViewSet);
 
         return grid;
     }

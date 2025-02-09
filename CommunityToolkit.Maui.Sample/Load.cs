@@ -10,10 +10,12 @@ namespace CommunityToolkit.Maui.Sample;
 public partial class MediaElementPage : BasePage
 {
     GraphicsView? OverlayViewRise;
+    GraphicsView? OverlayViewSet;
 
 
     private static IImage? OverlayImage;
-    private static IImage? SavedImage;
+    private static IImage? SavedRiseImage;
+    private static IImage? SavedSetImage;
     public class GraphicsDrawable(IImage image, string text) : IDrawable
     {
         public void Draw(ICanvas canvas, RectF dirtyRect)
@@ -46,10 +48,25 @@ public partial class MediaElementPage : BasePage
         {
             const float videoYfraction = 248.0f/480;
             float y1 = videoYfraction*dirtyRect.Bottom;
-            canvas.DrawImage(SavedImage, 0, y1, dirtyRect.Width, dirtyRect.Bottom-y1);  // !! OK !! //Drawing image at position (0, 77,54921) with width 411,4286 and height 150,0952
+            canvas.DrawImage(SavedRiseImage, 0, y1, dirtyRect.Width, dirtyRect.Bottom-y1);  // !! OK !! //Drawing image at position (0, 77,54921) with width 411,4286 and height 150,0952
+        }
+    }
+    public class GraphicsDrawable3 : IDrawable
+    {
+        public void Draw(ICanvas canvas, RectF dirtyRect)
+        {
+            const float videoYfraction = 248.0f/480;
+            float y1 = videoYfraction*dirtyRect.Bottom;
+            canvas.DrawImage(SavedSetImage, 0, 0, dirtyRect.Width, dirtyRect.Bottom-y1);  //
         }
     }
     private void LoadOverlays()
+    {
+        LoadRise();
+        LoadSet();
+    }
+
+    private void LoadRise()
     {
         Assembly assembly = GetType().GetTypeInfo().Assembly;
         using (Stream stream = assembly!.GetManifestResourceStream("CommunityToolkit.Maui.Sample.Resources.Images.frame_264_ROI.png")!)
@@ -68,7 +85,7 @@ public partial class MediaElementPage : BasePage
         drawable.Draw(canvas, new RectF(0, 0, OverlayWidthPixels, OverlayHeightPixels));
 
         // Export the bitmap to an IImage object
-        SavedImage = bitmapExportContext.Image;
+        SavedRiseImage = bitmapExportContext.Image;
 
         OverlayViewRise = new()
         {
@@ -77,6 +94,36 @@ public partial class MediaElementPage : BasePage
             TranslationX = 0,
             TranslationY = 0,
             Drawable = new GraphicsDrawable2()
+        };
+    }
+    private void LoadSet()
+    {
+        Assembly assembly = GetType().GetTypeInfo().Assembly;
+        using (Stream stream = assembly!.GetManifestResourceStream("CommunityToolkit.Maui.Sample.Resources.Images.frame_969_ROI.png")!)
+        {
+            OverlayImage = PlatformImage.FromStream(stream);
+        }
+        GraphicsDrawable drawable = new(OverlayImage!, Calculator.sunsetTable!);
+
+        const int OverlayWidthPixels = 852;
+        const int OverlayHeightPixels = 230;
+
+        PlatformBitmapExportContext bitmapExportContext = new(OverlayWidthPixels, OverlayHeightPixels, 1.0f);
+        ICanvas canvas = bitmapExportContext.Canvas;
+
+        // Draw on the canvas
+        drawable.Draw(canvas, new RectF(0, 0, OverlayWidthPixels, OverlayHeightPixels));
+
+        // Export the bitmap to an IImage object
+        SavedSetImage = bitmapExportContext.Image;
+
+        OverlayViewSet = new()
+        {
+            AnchorX = 0,
+            AnchorY = 0,
+            TranslationX = 0,
+            TranslationY = 0,
+            Drawable = new GraphicsDrawable3()
         };
     }
 }

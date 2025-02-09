@@ -36,6 +36,7 @@ public partial class MediaElementPage : BasePage
         MediaElement!.PositionChanged += MediaElementPage_PositionChanged;
 
         OverlayViewRise!.IsVisible = false;
+        OverlayViewSet!.IsVisible = false;
 
         MediaElement.Play(); // try to make work on Emulators, didnt work!
         MediaElement.Stop();
@@ -46,6 +47,7 @@ public partial class MediaElementPage : BasePage
     private void MediaElementPage_PositionChanged(object? sender, EventArgs e)
     {
         OverlayViewRise!.IsVisible = MediaElement.Position.Between(8.9, 30.1);
+        OverlayViewSet!.IsVisible = MediaElement.Position.Between(32.4, 49.0);
     }
 
     private string ReadDeviceDisplay()
@@ -61,6 +63,7 @@ public partial class MediaElementPage : BasePage
     private void OnHeppClicked(object obj)
     {
         OverlayViewRise!.IsVisible = !OverlayViewRise!.IsVisible;
+        OverlayViewSet!.IsVisible = !OverlayViewSet!.IsVisible;
         infolabel.Text = ReadDeviceDisplay();
     }
 

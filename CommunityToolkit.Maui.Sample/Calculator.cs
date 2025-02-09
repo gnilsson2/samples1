@@ -160,7 +160,7 @@ namespace PaulSchlyter
 
         private static string Format_time(DateTime dateTime)
         {
-            return $"  {dateTime.AddSeconds(30):H:mm}   ";
+            return $" {dateTime.AddSeconds(30),5:H:mm}   ";
         }
 
         private static string Format_time_difference(TimeSpan result)
@@ -200,7 +200,8 @@ namespace PaulSchlyter
 
         public static void Calculate(DateTime today)
         {
-            object[,,] objects = new object[2, 3, places.Length];
+            object[,] objectsRise = new object[3, places.Length];
+            object[,] objectsSet = new object[3, places.Length];
 
             for (int p = 0; p < places.Length; p++)
             {
@@ -212,55 +213,50 @@ namespace PaulSchlyter
                 s2.rise = s2.rise.AddDays(7);
                 s2.set = s2.set.AddDays(7);
 
-                objects[0, 0, p] = s1.result == DiurnalResult.NormalDay ? Format_time(s1.rise) : NAtime;
-                objects[1, 0, p] = s1.result == DiurnalResult.NormalDay ? Format_time(s1.set) : NAtime;
-                objects[0, 1, p] = s2.result == DiurnalResult.NormalDay ? Format_time(s2.rise) : NAtime;
-                objects[1, 1, p] = s2.result == DiurnalResult.NormalDay ? Format_time(s2.set) : NAtime;
+                objectsRise[0, p] = s1.result == DiurnalResult.NormalDay ? Format_time(s1.rise) : NAtime;
+                objectsSet[0, p] = s1.result == DiurnalResult.NormalDay ? Format_time(s1.set) : NAtime;
+                objectsRise[1, p] = s2.result == DiurnalResult.NormalDay ? Format_time(s2.rise) : NAtime;
+                objectsSet[1, p] = s2.result == DiurnalResult.NormalDay ? Format_time(s2.set) : NAtime;
                 if (s1.result == DiurnalResult.NormalDay && s2.result == DiurnalResult.NormalDay)
                 {
-                    objects[0, 2, p] = Format_time_difference(s2.rise - s1.rise);
-                    objects[1, 2, p] = Format_time_difference(s1.set - s2.set);
+                    objectsRise[2, p] = Format_time_difference(s2.rise - s1.rise);
+                    objectsSet[2, p] = Format_time_difference(s1.set - s2.set);
                 }
                 else
                 {
-                    objects[0, 2, p] = NAtime;
-                    objects[1, 2, p] = NAtime;
+                    objectsRise[2, p] = NAtime;
+                    objectsSet[2, p] = NAtime;
                 }
             }
 
+            Format(objectsRise,out sunriseTable);
+            Format(objectsSet,out sunsetTable);
+
+        }
+
+        private static void Format(object[,] objects, out string table)
+        {
             //Column headers
-            sunriseTable = "\n";
-            sunriseTable += "               ";
+            table = "\n";
+            table += "               ";
             for (int p = 0; p < places.Length; p++)
             {
-                sunriseTable += (places[p].Name);
-                sunriseTable += "    ";
+                table += (places[p].Name);
+                table += "    ";
             }
-            sunriseTable += "\n";
+            table += "\n";
 
             for (int j = 0; j < 3; j++)
             {
-                sunriseTable += "\n";
-                sunriseTable += rowlabels[j];
+                table += "\n";
+                table += rowlabels[j];
                 for (int p = 0; p < places.Length; p++)
                 {
-                    sunriseTable += " "+(objects[0, j, p]);
-                    //sunriseTable += "    ";
+                    table += " "+(objects[j, p]);
+                    //table += "    ";
                 }
-                sunriseTable += "\n";
+                table += "\n";
             }
-
-            sunsetTable = "";
-            for (int j = 0; j < 3; j++)
-            {
-                for (int p = 0; p < places.Length; p++)
-                {
-                    sunsetTable += (objects[1, j, p]);
-                    sunsetTable += "    ";
-                }
-                sunsetTable += "\n";
-            }
-
         }
     }
 
